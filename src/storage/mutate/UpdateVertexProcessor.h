@@ -42,16 +42,16 @@ private:
                                                                               executor,
                                                                               cache) {}
 
-    cpp2::ErrorCode checkAndBuildContexts(const cpp2::UpdateVertexRequest& req) override;
+    ErrorCode checkAndBuildContexts(const cpp2::UpdateVertexRequest& req) override;
 
     StoragePlan<VertexID> buildPlan(nebula::DataSet* result);
 
     // Get the schema of all versions of all tags in the spaceId
-    cpp2::ErrorCode buildTagSchema();
+    ErrorCode buildTagSchema();
 
     // Build TagContext by parsing return props expressions,
     // filter expression, update props expression
-    cpp2::ErrorCode buildTagContext(const cpp2::UpdateVertexRequest& req);
+    ErrorCode buildTagContext(const cpp2::UpdateVertexRequest& req);
 
     void onProcessFinished() override;
 

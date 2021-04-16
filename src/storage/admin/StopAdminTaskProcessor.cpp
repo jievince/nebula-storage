@@ -15,9 +15,9 @@ void StopAdminTaskProcessor::process(const cpp2::StopAdminTaskRequest& req) {
     auto taskManager = AdminTaskManager::instance();
     auto rc = taskManager->cancelJob(req.get_job_id());
 
-    if (rc != cpp2::ErrorCode::SUCCEEDED) {
-        cpp2::PartitionResult thriftRet;
-        thriftRet.set_code(rc);
+    if (rc != ErrorCode::SUCCEEDED) {
+        nebula::PartitionResult thriftRet;
+        thriftRet.code = rc;
         codes_.emplace_back(std::move(thriftRet));
     }
 

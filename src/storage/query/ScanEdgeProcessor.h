@@ -16,7 +16,7 @@ namespace storage {
 extern ProcessorCounters kScanEdgeCounters;
 
 class ScanEdgeProcessor
-    : public QueryBaseProcessor<cpp2::ScanEdgeRequest, cpp2::ScanEdgeResponse> {
+    : public QueryBaseProcessor<cpp2::ScanEdgeRequest, nebula::ScanEdgeResponse> {
 public:
     static ScanEdgeProcessor* instance(
             StorageEnv* env,
@@ -34,12 +34,12 @@ private:
                       const ProcessorCounters* counters,
                       folly::Executor* executor)
         : QueryBaseProcessor<cpp2::ScanEdgeRequest,
-                             cpp2::ScanEdgeResponse>(env,
+                             nebula::ScanEdgeResponse>(env,
                                                      counters,
                                                      executor) {
     }
 
-    cpp2::ErrorCode checkAndBuildContexts(const cpp2::ScanEdgeRequest& req) override;
+    ErrorCode checkAndBuildContexts(const cpp2::ScanEdgeRequest& req) override;
 
     void buildEdgeColName(const std::vector<cpp2::EdgeProp>& edgeProps);
 

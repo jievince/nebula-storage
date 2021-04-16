@@ -194,11 +194,11 @@ public:
 
     static StatusOr<Value> ttlValue(const meta::SchemaProviderIf* schema, RowReader* reader);
 
-    static cpp2::ErrorCode to(const Status& status);
+    static ErrorCode to(const Status& status);
 
-    static cpp2::ErrorCode to(kvstore::ResultCode rc);
+    static ErrorCode to(kvstore::ResultCode rc);
 
-    static kvstore::ResultCode to(cpp2::ErrorCode rc);
+    static kvstore::ResultCode to(ErrorCode rc);
 };
 
 }  // namespace storage

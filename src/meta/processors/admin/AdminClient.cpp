@@ -47,17 +47,17 @@ folly::Future<Status> AdminClient::transLeader(GraphSpaceID spaceId,
            [] (auto client, auto request) {
                return client->future_transLeader(request);
            }, [] (auto&& resp) -> Status {
-               switch (resp.get_code()) {
-                   case storage::cpp2::ErrorCode::SUCCEEDED:
-                   case storage::cpp2::ErrorCode::E_LEADER_CHANGED: {
+               switch (resp.code) {
+                   case storage::ErrorCode::SUCCEEDED:
+                   case storage::ErrorCode::E_LEADER_CHANGED: {
                        return Status::OK();
                    }
-                   case storage::cpp2::ErrorCode::E_PART_NOT_FOUND: {
+                   case storage::ErrorCode::E_PART_NOT_FOUND: {
                        return Status::PartNotFound();
                    }
                    default:
                        return Status::Error("Unknown code %d",
-                                            static_cast<int32_t>(resp.get_code()));
+                                            static_cast<int32_t>(resp.code));
                }
            });
 }
@@ -81,11 +81,11 @@ folly::Future<Status> AdminClient::addPart(GraphSpaceID spaceId,
                            return client->future_addPart(request);
                        },
                        [] (auto&& resp) -> Status {
-                           if (resp.get_code() == storage::cpp2::ErrorCode::SUCCEEDED) {
+                           if (resp.code == storage::ErrorCode::SUCCEEDED) {
                                return Status::OK();
                            } else {
                                return Status::Error("Add part failed! code=%d",
-                                                    static_cast<int32_t>(resp.get_code()));
+                                                    static_cast<int32_t>(resp.code));
                            }
                        });
 }
@@ -229,11 +229,11 @@ folly::Future<Status> AdminClient::removePart(GraphSpaceID spaceId,
            [] (auto client, auto request) {
                return client->future_removePart(request);
            }, [] (auto&& resp) -> Status {
-               if (resp.get_code() == storage::cpp2::ErrorCode::SUCCEEDED) {
+               if (resp.code == storage::ErrorCode::SUCCEEDED) {
                    return Status::OK();
                } else {
                    return Status::Error("Remove part failed! code=%d",
-                                        static_cast<int32_t>(resp.get_code()));
+                                        static_cast<int32_t>(resp.code));
                }
            });
 }
@@ -261,11 +261,11 @@ folly::Future<Status> AdminClient::checkPeers(GraphSpaceID spaceId, PartitionID 
                  [] (auto client, auto request) {
                     return client->future_checkPeers(request);
                  }, [] (auto&& resp) -> Status {
-                    if (resp.get_code() == storage::cpp2::ErrorCode::SUCCEEDED) {
+                    if (resp.code == storage::ErrorCode::SUCCEEDED) {
                         return Status::OK();
                     } else {
                         return Status::Error("Check peers failed! code=%d",
-                                             static_cast<int32_t>(resp.get_code()));
+                                             static_cast<int32_t>(resp.code));
                     }
                  });
         futures.emplace_back(std::move(f));
@@ -320,13 +320,13 @@ folly::Future<Status> AdminClient::getResponse(
                     return;
                 }
                 auto&& result = std::move(t).value().get_result();
-                if (result.get_failed_parts().empty()) {
-                    storage::cpp2::PartitionResult resultCode;
-                    resultCode.set_code(storage::cpp2::ErrorCode::SUCCEEDED);
-                    resultCode.set_part_id(partId);
+                if (result.failedParts.empty()) {
+                    nebula::PartitionResult resultCode;
+                    resultCode.code = storage::ErrorCode::SUCCEEDED;
+                    resultCode.partId = partId;
                     p.setValue(respGen(resultCode));
                 } else {
-                    auto resp = result.get_failed_parts().front();
+                    auto resp = result.failedParts.front();
                     p.setValue(respGen(std::move(resp)));
                 }
             });
@@ -379,7 +379,7 @@ void AdminClient::getResponse(std::vector<HostAddr> hosts,
                 return;
             }
             auto&& adminResp = std::move(t.value());
-            if (adminResp.result.get_failed_parts().empty()) {
+            if (adminResp.result.failedParts.empty()) {
                 // succeeded
                 if (respGen != folly::none) {
                     auto val = respGen.value();
@@ -388,13 +388,13 @@ void AdminClient::getResponse(std::vector<HostAddr> hosts,
                 p.setValue(Status::OK());
                 return;
             }
-            auto resp = adminResp.result.get_failed_parts().front();
-            switch (resp.get_code()) {
-                case storage::cpp2::ErrorCode::E_LEADER_CHANGED: {
+            auto resp = adminResp.result.failedParts.front();
+            switch (resp.code) {
+                case storage::ErrorCode::E_LEADER_CHANGED: {
                     if (retry < retryLimit) {
                         HostAddr leader("", 0);
-                        if (resp.get_leader() != nullptr) {
-                            leader = *resp.get_leader();
+                        if (resp.leader != nullptr) {
+                            leader = *resp.leader;
                         }
                         if (leader == HostAddr("", 0)) {
                             usleep(1000 * 50);
@@ -449,7 +449,7 @@ void AdminClient::getResponse(std::vector<HostAddr> hosts,
                 }
                 default: {
                     if (retry < retryLimit) {
-                        LOG(INFO) << "Unknown code " << static_cast<int32_t>(resp.get_code())
+                        LOG(INFO) << "Unknown code " << static_cast<int32_t>(resp.code)
                                   << " from " << hosts[index]
                                   << ", retry " << retry
                                   << ", limit " << retryLimit;
@@ -465,7 +465,7 @@ void AdminClient::getResponse(std::vector<HostAddr> hosts,
                         return;
                     }
                     p.setValue(Status::Error("Unknown code %d",
-                                             static_cast<int32_t>(resp.get_code())));
+                                             static_cast<int32_t>(resp.code)));
                     return;
                 }
             }
@@ -596,7 +596,7 @@ folly::Future<StatusOr<std::string>> AdminClient::createSnapshot(GraphSpaceID sp
                 }
                 auto&& resp = std::move(t).value();
                 auto&& result = resp.get_result();
-                if (result.get_failed_parts().empty()) {
+                if (result.failedParts.empty()) {
                     p.setValue(std::move(resp.get_path()));
                     return;
                 }

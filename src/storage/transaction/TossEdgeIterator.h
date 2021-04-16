@@ -255,7 +255,7 @@ private:
      */
     bool                                                 stopAtFirstEdge_{false};
     bool                                                 calledByCtor_{true};
-    std::list<folly::SemiFuture<cpp2::ErrorCode>>        resumeTasks_;
+    std::list<folly::SemiFuture<ErrorCode>>              resumeTasks_;
     std::list<TResultsItem>                              recoverEdges_;
     std::list<TResultsItem>::iterator                    recoverEdgesIter_;
 };

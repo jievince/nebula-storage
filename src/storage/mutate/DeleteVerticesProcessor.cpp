@@ -24,7 +24,7 @@ void DeleteVerticesProcessor::process(const cpp2::DeleteVerticesRequest& req) {
     if (!ret.ok()) {
         LOG(ERROR) << ret.status();
         for (auto& part : partVertices) {
-            pushResultCode(cpp2::ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
+            pushResultCode(ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
         }
         onFinished();
         return;
@@ -37,7 +37,7 @@ void DeleteVerticesProcessor::process(const cpp2::DeleteVerticesRequest& req) {
     if (!iRet.ok()) {
         LOG(ERROR) << iRet.status();
         for (auto& part : partVertices) {
-            pushResultCode(cpp2::ErrorCode::E_SPACE_NOT_FOUND, part.first);
+            pushResultCode(ErrorCode::E_SPACE_NOT_FOUND, part.first);
         }
         onFinished();
         return;
@@ -53,12 +53,12 @@ void DeleteVerticesProcessor::process(const cpp2::DeleteVerticesRequest& req) {
             auto partId = part.first;
             const auto& vertexIds = part.second;
             keys.clear();
-            cpp2::ErrorCode code = cpp2::ErrorCode::SUCCEEDED;
+            ErrorCode code = ErrorCode::SUCCEEDED;
             for (auto& vid : vertexIds) {
                 if (!NebulaKeyUtils::isValidVidLen(spaceVidLen_, vid.getStr())) {
                     LOG(ERROR) << "Space " << spaceId_ << ", vertex length invalid, "
                                << " space vid len: " << spaceVidLen_ << ",  vid is " << vid;
-                    code = cpp2::ErrorCode::E_INVALID_VID;
+                    code = ErrorCode::E_INVALID_VID;
                     break;
                 }
 
@@ -84,7 +84,7 @@ void DeleteVerticesProcessor::process(const cpp2::DeleteVerticesRequest& req) {
                     iter->next();
                 }
             }
-            if (code != cpp2::ErrorCode::SUCCEEDED) {
+            if (code != ErrorCode::SUCCEEDED) {
                 handleAsync(spaceId_, partId, code);
                 continue;
             }
@@ -109,7 +109,7 @@ void DeleteVerticesProcessor::process(const cpp2::DeleteVerticesRequest& req) {
                         << std::get<1>(conflict) << ":"
                         << std::get<2>(conflict) << ":"
                         << std::get<3>(conflict);
-                handleAsync(spaceId_, partId, cpp2::ErrorCode::E_DATA_CONFLICT_ERROR);
+                handleAsync(spaceId_, partId, ErrorCode::E_DATA_CONFLICT_ERROR);
                 continue;
             }
             env_->kvstore_->asyncAppendBatch(spaceId_, partId, std::move(nebula::value(batch)),

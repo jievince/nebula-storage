@@ -20,8 +20,8 @@ namespace meta {
         folly::Promise<storage::cpp2::AdminExecResp> pro;                                          \
         auto f = pro.getFuture();                                                                  \
         storage::cpp2::AdminExecResp resp;                                                         \
-        storage::cpp2::ResponseCommon result;                                                      \
-        std::vector<storage::cpp2::PartitionResult> partRetCode;                                   \
+        nebula::ResponseCommon result;                                                      \
+        std::vector<nebula::PartitionResult> partRetCode;                                   \
         result.set_failed_parts(partRetCode);                                                      \
         resp.set_result(result);                                                                   \
         pro.setValue(std::move(resp));                                                             \
@@ -41,8 +41,8 @@ public:
         folly::Promise<storage::cpp2::CreateCPResp> pro;
         auto f = pro.getFuture();
         storage::cpp2::CreateCPResp resp;
-        storage::cpp2::ResponseCommon result;
-        std::vector<storage::cpp2::PartitionResult> partRetCode;
+        nebula::ResponseCommon result;
+        std::vector<nebula::PartitionResult> partRetCode;
         result.set_failed_parts(partRetCode);
         resp.set_result(result);
         resp.set_path("snapshot_path");

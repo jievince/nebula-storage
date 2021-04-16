@@ -138,7 +138,7 @@ GraphStorageServiceHandler::future_lookupIndex(const cpp2::LookupIndexRequest& r
 }
 
 
-folly::Future<cpp2::ScanVertexResponse>
+folly::Future<nebula::ScanVertexResponse>
 GraphStorageServiceHandler::future_scanVertex(const cpp2::ScanVertexRequest& req) {
     auto* processor = ScanVertexProcessor::instance(env_,
                                                     &kScanVertexCounters,
@@ -147,7 +147,7 @@ GraphStorageServiceHandler::future_scanVertex(const cpp2::ScanVertexRequest& req
 }
 
 
-folly::Future<cpp2::ScanEdgeResponse>
+folly::Future<nebula::ScanEdgeResponse>
 GraphStorageServiceHandler::future_scanEdge(const cpp2::ScanEdgeRequest& req) {
     auto* processor = ScanEdgeProcessor::instance(env_,
                                                   &kScanEdgeCounters,

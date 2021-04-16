@@ -20,8 +20,8 @@
         folly::Promise<storage::cpp2::AdminExecResp> pro; \
         auto f = pro.getFuture(); \
         storage::cpp2::AdminExecResp resp; \
-        storage::cpp2::ResponseCommon result; \
-        std::vector<storage::cpp2::PartitionResult> partRetCode; \
+        nebula::ResponseCommon result; \
+        std::vector<nebula::PartitionResult> partRetCode; \
         result.set_failed_parts(partRetCode); \
         resp.set_result(result); \
         pro.setValue(std::move(resp)); \
@@ -34,10 +34,10 @@
         folly::Promise<storage::cpp2::AdminExecResp> pro; \
         auto f = pro.getFuture(); \
         storage::cpp2::AdminExecResp resp; \
-        storage::cpp2::ResponseCommon result; \
-        std::vector<storage::cpp2::PartitionResult> partRetCode; \
-        storage::cpp2::PartitionResult thriftRet; \
-        thriftRet.set_code(storage::cpp2::ErrorCode::E_LEADER_CHANGED); \
+        nebula::ResponseCommon result; \
+        std::vector<nebula::PartitionResult> partRetCode; \
+        nebula::PartitionResult thriftRet; \
+        thriftRet.set_code(storage::ErrorCode::E_LEADER_CHANGED); \
         thriftRet.set_leader(leader); \
         partRetCode.emplace_back(std::move(thriftRet)); \
         result.set_failed_parts(partRetCode); \
@@ -90,8 +90,8 @@ public:
         folly::Promise<storage::cpp2::CreateCPResp> pro;
         auto f = pro.getFuture();
         storage::cpp2::CreateCPResp resp;
-        storage::cpp2::ResponseCommon result;
-        std::vector<storage::cpp2::PartitionResult> partRetCode;
+        nebula::ResponseCommon result;
+        std::vector<nebula::PartitionResult> partRetCode;
         result.set_failed_parts(partRetCode);
         resp.set_result(result);
         resp.set_path("snapshot_path");

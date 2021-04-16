@@ -12,7 +12,7 @@
 namespace nebula {
 namespace storage {
 
-ErrorOr<cpp2::ErrorCode, std::vector<AdminSubTask>>
+ErrorOr<ErrorCode, std::vector<AdminSubTask>>
 RebuildIndexTask::genSubTasks() {
     CHECK_NOTNULL(env_->kvstore_);
     space_ = *ctx_.parameters_.space_id_ref();
@@ -24,7 +24,7 @@ RebuildIndexTask::genSubTasks() {
         auto itemsRet = getIndexes(space_);
         if (!itemsRet.ok()) {
             LOG(ERROR) << "Indexes not found";
-            return cpp2::ErrorCode::E_INDEX_NOT_FOUND;
+            return ErrorCode::E_INDEX_NOT_FOUND;
         }
 
         items = std::move(itemsRet).value();
@@ -34,7 +34,7 @@ RebuildIndexTask::genSubTasks() {
             auto indexRet = getIndex(space_, indexID);
             if (!indexRet.ok()) {
                 LOG(ERROR) << "Index not found: " << indexID;
-                return cpp2::ErrorCode::E_INDEX_NOT_FOUND;
+                return ErrorCode::E_INDEX_NOT_FOUND;
             }
             items.emplace_back(indexRet.value());
         }
@@ -42,7 +42,7 @@ RebuildIndexTask::genSubTasks() {
 
     if (items.empty()) {
         LOG(ERROR) << "Index is empty";
-        return cpp2::ErrorCode::SUCCEEDED;
+        return ErrorCode::SUCCEEDED;
     }
 
     std::vector<AdminSubTask> tasks;
@@ -50,7 +50,7 @@ RebuildIndexTask::genSubTasks() {
          it != env_->rebuildIndexGuard_->cend(); ++it) {
         if (std::get<0>(it->first) == space_ && it->second != IndexState::FINISHED) {
             LOG(ERROR) << "This space is building index";
-            return cpp2::ErrorCode::E_REBUILD_INDEX_FAILED;
+            return ErrorCode::E_REBUILD_INDEX_FAILED;
         }
     }
 

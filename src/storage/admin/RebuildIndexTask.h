@@ -26,7 +26,7 @@ public:
         LOG(INFO) << "Release Rebuild Task";
     }
 
-    ErrorOr<cpp2::ErrorCode, std::vector<AdminSubTask>> genSubTasks() override;
+    ErrorOr<ErrorCode, std::vector<AdminSubTask>> genSubTasks() override;
 
 protected:
     virtual StatusOr<IndexItems>

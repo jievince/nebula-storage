@@ -16,25 +16,25 @@ namespace storage {
 void AdminTaskProcessor::process(const cpp2::AddAdminTaskRequest& req) {
     auto taskManager = AdminTaskManager::instance();
 
-    auto toMetaErrCode = [](storage::cpp2::ErrorCode storageCode) {
+    auto toMetaErrCode = [](storage::ErrorCode storageCode) {
         switch (storageCode) {
-            case storage::cpp2::ErrorCode::SUCCEEDED:
+            case storage::ErrorCode::SUCCEEDED:
                 return meta::cpp2::ErrorCode::SUCCEEDED;
-            case storage::cpp2::ErrorCode::E_UNKNOWN:
+            case storage::ErrorCode::E_UNKNOWN:
                 return meta::cpp2::ErrorCode::E_UNKNOWN;
             default:
                 LOG(ERROR) << "unsupported conversion of code "
-                           << apache::thrift::util::enumNameSafe(storageCode);
+                           << "fuck";
                 return meta::cpp2::ErrorCode::E_UNKNOWN;
         }
     };
 
     auto cb = [env = env_, toMetaErrCode = std::move(toMetaErrCode),
                jobId = req.get_job_id(), taskId = req.get_task_id()](
-                  nebula::storage::cpp2::ErrorCode errCode,
+                  nebula::storage::ErrorCode errCode,
                   nebula::meta::cpp2::StatisItem& result) {
         meta::cpp2::StatisItem* pStatis = nullptr;
-        if (errCode == cpp2::ErrorCode::SUCCEEDED &&
+        if (errCode == ErrorCode::SUCCEEDED &&
             *result.status_ref() == nebula::meta::cpp2::JobStatus::FINISHED) {
             pStatis = &result;
         }
@@ -84,8 +84,8 @@ void AdminTaskProcessor::process(const cpp2::AddAdminTaskRequest& req) {
     if (task) {
         taskManager->addAsyncTask(task);
     } else {
-        cpp2::PartitionResult thriftRet;
-        thriftRet.set_code(cpp2::ErrorCode::E_INVALID_TASK_PARA);
+        nebula::PartitionResult thriftRet;
+        thriftRet.code = ErrorCode::E_INVALID_TASK_PARA;
         codes_.emplace_back(std::move(thriftRet));
     }
     onFinished();

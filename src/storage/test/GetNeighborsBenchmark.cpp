@@ -204,7 +204,7 @@ void goEdgeNode(int32_t iters,
             resultDataSet.rows.emplace_back(std::move(row));
         }
         CHECK_EQ(vertex.size(), resultDataSet.rowSize());
-        nebula::storage::cpp2::ResponseCommon result;
+        nebula::ResponseCommon result;
         resp.set_result(std::move(result));
         resp.set_vertices(std::move(resultDataSet));
         auto encoded = encode(resp);
@@ -297,7 +297,7 @@ void prefix(int32_t iters,
             resultDataSet.rows.emplace_back(std::move(row));
         }
         CHECK_EQ(vertex.size(), resultDataSet.rowSize());
-        nebula::storage::cpp2::ResponseCommon result;
+        nebula::ResponseCommon result;
         resp.set_result(std::move(result));
         resp.set_vertices(std::move(resultDataSet));
         auto encoded = encode(resp);

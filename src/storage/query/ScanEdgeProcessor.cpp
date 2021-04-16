@@ -29,14 +29,14 @@ void ScanEdgeProcessor::doProcess(const cpp2::ScanEdgeRequest& req) {
     partId_ = req.get_part_id();
 
     auto retCode = getSpaceVidLen(spaceId_);
-    if (retCode != cpp2::ErrorCode::SUCCEEDED) {
+    if (retCode != ErrorCode::SUCCEEDED) {
         pushResultCode(retCode, partId_);
         onFinished();
         return;
     }
 
     retCode = checkAndBuildContexts(req);
-    if (retCode != cpp2::ErrorCode::SUCCEEDED) {
+    if (retCode != ErrorCode::SUCCEEDED) {
         pushResultCode(retCode, partId_);
         onFinished();
         return;
@@ -94,18 +94,18 @@ void ScanEdgeProcessor::doProcess(const cpp2::ScanEdgeRequest& req) {
     }
 
     if (iter->valid()) {
-        resp_.set_has_next(true);
-        resp_.set_next_cursor(iter->key().str());
+        resp_.hasNext = true;
+        resp_.nextCursor.reset(new std::string(iter->key().str()));
     } else {
-        resp_.set_has_next(false);
+        resp_.hasNext = false;
     }
     onProcessFinished();
     onFinished();
 }
 
-cpp2::ErrorCode ScanEdgeProcessor::checkAndBuildContexts(const cpp2::ScanEdgeRequest& req) {
+ErrorCode ScanEdgeProcessor::checkAndBuildContexts(const cpp2::ScanEdgeRequest& req) {
     auto ret = getSpaceEdgeSchema();
-    if (ret != cpp2::ErrorCode::SUCCEEDED) {
+    if (ret != ErrorCode::SUCCEEDED) {
         return ret;
     }
 

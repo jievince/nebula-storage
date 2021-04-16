@@ -16,7 +16,7 @@ namespace storage {
 extern ProcessorCounters kScanVertexCounters;
 
 class ScanVertexProcessor
-    : public QueryBaseProcessor<cpp2::ScanVertexRequest, cpp2::ScanVertexResponse> {
+    : public QueryBaseProcessor<cpp2::ScanVertexRequest, nebula::ScanVertexResponse> {
 public:
     static ScanVertexProcessor* instance(
             StorageEnv* env,
@@ -34,12 +34,12 @@ private:
                         const ProcessorCounters* counters,
                         folly::Executor* executor)
         : QueryBaseProcessor<cpp2::ScanVertexRequest,
-                             cpp2::ScanVertexResponse>(env,
+                             nebula::ScanVertexResponse>(env,
                                                        counters,
                                                        executor) {
     }
 
-    cpp2::ErrorCode checkAndBuildContexts(const cpp2::ScanVertexRequest& req) override;
+    ErrorCode checkAndBuildContexts(const cpp2::ScanVertexRequest& req) override;
 
     void buildTagColName(const std::vector<cpp2::VertexProp>& tagProps);
 

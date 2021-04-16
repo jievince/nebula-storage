@@ -40,14 +40,14 @@ protected:
     virtual void onFinished() {
         if (counters_) {
             stats::StatsManager::addValue(counters_->numCalls_);
-            if (!this->result_.get_failed_parts().empty()) {
+            if (!this->result_.failedParts.empty()) {
                 stats::StatsManager::addValue(counters_->numErrors_);
             }
         }
 
-        this->result_.set_latency_in_us(this->duration_.elapsedInUSec());
-        this->result_.set_failed_parts(this->codes_);
-        this->resp_.set_result(std::move(this->result_));
+        this->result_.latencyInUs = this->duration_.elapsedInUSec();
+        this->result_.failedParts = this->codes_;
+        this->resp_.result = std::move(this->result_);
         this->promise_.setValue(std::move(this->resp_));
 
         if (counters_) {
@@ -57,20 +57,20 @@ protected:
         delete this;
     }
 
-    cpp2::ErrorCode getSpaceVidLen(GraphSpaceID spaceId) {
+    ErrorCode getSpaceVidLen(GraphSpaceID spaceId) {
         auto len = this->env_->schemaMan_->getSpaceVidLen(spaceId);
         if (!len.ok()) {
-            return cpp2::ErrorCode::E_SPACE_NOT_FOUND;
+            return ErrorCode::E_SPACE_NOT_FOUND;
         }
         spaceVidLen_ = len.value();
 
         auto vIdType = this->env_->schemaMan_->getSpaceVidType(spaceId);
         if (!vIdType.ok()) {
-            return cpp2::ErrorCode::E_SPACE_NOT_FOUND;
+            return ErrorCode::E_SPACE_NOT_FOUND;
         }
         isIntId_ = (vIdType.value() == meta::cpp2::PropertyType::INT64);
 
-        return cpp2::ErrorCode::SUCCEEDED;
+        return ErrorCode::SUCCEEDED;
     }
 
     void doPut(GraphSpaceID spaceId, PartitionID partId, std::vector<kvstore::KV>&& data);
@@ -88,16 +88,16 @@ protected:
                        const std::string& start,
                        const std::string& end);
 
-    cpp2::ErrorCode to(kvstore::ResultCode code);
+    ErrorCode to(kvstore::ResultCode code);
 
-    cpp2::ErrorCode writeResultTo(WriteResult code, bool isEdge);
+    ErrorCode writeResultTo(WriteResult code, bool isEdge);
 
     nebula::meta::cpp2::ColumnDef columnDef(std::string name,
                                             nebula::meta::cpp2::PropertyType type);
 
-    void pushResultCode(cpp2::ErrorCode code, PartitionID partId);
+    void pushResultCode(ErrorCode code, PartitionID partId);
 
-    void pushResultCode(cpp2::ErrorCode code, PartitionID partId, HostAddr leader);
+    void pushResultCode(ErrorCode code, PartitionID partId, HostAddr leader);
 
     void handleErrorCode(kvstore::ResultCode code, GraphSpaceID spaceId, PartitionID partId);
 
@@ -109,7 +109,7 @@ protected:
 
     void handleAsync(GraphSpaceID spaceId,
                      PartitionID partId,
-                     cpp2::ErrorCode code);
+                     ErrorCode code);
 
     StatusOr<std::string> encodeRowVal(const meta::NebulaSchemaProvider* schema,
                                        const std::vector<std::string>& propNames,
@@ -122,11 +122,11 @@ protected:
 
     RESP                                            resp_;
     folly::Promise<RESP>                            promise_;
-    cpp2::ResponseCommon                            result_;
+    nebula::ResponseCommon                          result_;
 
     std::unique_ptr<PlanContext>                    planContext_;
     time::Duration                                  duration_;
-    std::vector<cpp2::PartitionResult>              codes_;
+    std::vector<nebula::PartitionResult>            codes_;
     std::mutex                                      lock_;
     int32_t                                         callingNum_{0};
     int32_t                                         spaceVidLen_;

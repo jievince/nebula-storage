@@ -26,9 +26,9 @@ public:
         LOG(INFO) << "Release Statis Task";
     }
 
-    ErrorOr<cpp2::ErrorCode, std::vector<AdminSubTask>> genSubTasks() override;
+    ErrorOr<ErrorCode, std::vector<AdminSubTask>> genSubTasks() override;
 
-    void finish(cpp2::ErrorCode rc) override;
+    void finish(ErrorCode rc) override;
 
 protected:
     void cancel() override {
@@ -41,7 +41,7 @@ protected:
                                    std::unordered_map<EdgeType, std::string> edges);
 
 private:
-    cpp2::ErrorCode getSchemas(GraphSpaceID spaceId);
+    ErrorCode getSchemas(GraphSpaceID spaceId);
 
 protected:
     std::atomic<bool>                           canceled_{false};

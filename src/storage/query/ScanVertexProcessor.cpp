@@ -29,14 +29,14 @@ void ScanVertexProcessor::doProcess(const cpp2::ScanVertexRequest& req) {
     partId_ = req.get_part_id();
 
     auto retCode = getSpaceVidLen(spaceId_);
-    if (retCode != cpp2::ErrorCode::SUCCEEDED) {
+    if (retCode != ErrorCode::SUCCEEDED) {
         pushResultCode(retCode, partId_);
         onFinished();
         return;
     }
 
     retCode = checkAndBuildContexts(req);
-    if (retCode != cpp2::ErrorCode::SUCCEEDED) {
+    if (retCode != ErrorCode::SUCCEEDED) {
         pushResultCode(retCode, partId_);
         onFinished();
         return;
@@ -99,9 +99,9 @@ void ScanVertexProcessor::doProcess(const cpp2::ScanVertexRequest& req) {
     onFinished();
 }
 
-cpp2::ErrorCode ScanVertexProcessor::checkAndBuildContexts(const cpp2::ScanVertexRequest& req) {
+ErrorCode ScanVertexProcessor::checkAndBuildContexts(const cpp2::ScanVertexRequest& req) {
     auto ret = getSpaceVertexSchema();
-    if (ret != cpp2::ErrorCode::SUCCEEDED) {
+    if (ret != ErrorCode::SUCCEEDED) {
         return ret;
     }
 

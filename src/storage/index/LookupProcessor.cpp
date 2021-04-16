@@ -22,7 +22,7 @@ void LookupProcessor::process(const cpp2::LookupIndexRequest& req) {
 }
 void LookupProcessor::doProcess(const cpp2::LookupIndexRequest& req) {
     auto retCode = requestCheck(req);
-    if (retCode != cpp2::ErrorCode::SUCCEEDED) {
+    if (retCode != ErrorCode::SUCCEEDED) {
         for (auto& p : req.get_parts()) {
             pushResultCode(retCode, p);
         }
@@ -33,7 +33,7 @@ void LookupProcessor::doProcess(const cpp2::LookupIndexRequest& req) {
     auto plan = buildPlan();
     if (!plan.ok()) {
         for (auto& p : req.get_parts()) {
-            pushResultCode(cpp2::ErrorCode::E_INDEX_NOT_FOUND, p);
+            pushResultCode(ErrorCode::E_INDEX_NOT_FOUND, p);
         }
         onFinished();
         return;

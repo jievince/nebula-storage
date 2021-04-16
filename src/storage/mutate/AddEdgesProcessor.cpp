@@ -27,7 +27,7 @@ void AddEdgesProcessor::process(const cpp2::AddEdgesRequest& req) {
     if (!ret.ok()) {
         LOG(ERROR) << ret.status();
         for (auto& part : partEdges) {
-            pushResultCode(cpp2::ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
+            pushResultCode(ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
         }
         onFinished();
         return;
@@ -41,7 +41,7 @@ void AddEdgesProcessor::process(const cpp2::AddEdgesRequest& req) {
     if (!iRet.ok()) {
         LOG(ERROR) << iRet.status();
         for (auto& part : partEdges) {
-            pushResultCode(cpp2::ErrorCode::E_SPACE_NOT_FOUND, part.first);
+            pushResultCode(ErrorCode::E_SPACE_NOT_FOUND, part.first);
         }
         onFinished();
         return;
@@ -66,7 +66,7 @@ void AddEdgesProcessor::doProcess(const cpp2::AddEdgesRequest& req) {
 
         std::vector<kvstore::KV> data;
         data.reserve(32);
-        cpp2::ErrorCode code = cpp2::ErrorCode::SUCCEEDED;
+        ErrorCode code = ErrorCode::SUCCEEDED;
         std::unordered_set<std::string> visited;
         visited.reserve(newEdges.size());
 
@@ -83,7 +83,7 @@ void AddEdgesProcessor::doProcess(const cpp2::AddEdgesRequest& req) {
                            << "space vid len: " << spaceVidLen_
                            << ", edge srcVid: " << *edgeKey.src_ref()
                            << ", dstVid: " << *edgeKey.dst_ref();
-                code = cpp2::ErrorCode::E_INVALID_VID;
+                code = ErrorCode::E_INVALID_VID;
                 break;
             }
 
@@ -113,7 +113,7 @@ void AddEdgesProcessor::doProcess(const cpp2::AddEdgesRequest& req) {
             if (!schema) {
                 LOG(ERROR) << "Space " << spaceId_ << ", Edge "
                            << *edgeKey.edge_type_ref() << " invalid";
-                code = cpp2::ErrorCode::E_EDGE_NOT_FOUND;
+                code = ErrorCode::E_EDGE_NOT_FOUND;
                 break;
             }
 
@@ -128,7 +128,7 @@ void AddEdgesProcessor::doProcess(const cpp2::AddEdgesRequest& req) {
                 data.emplace_back(std::move(key), std::move(retEnc.value()));
             }
         }
-        if (code != cpp2::ErrorCode::SUCCEEDED) {
+        if (code != ErrorCode::SUCCEEDED) {
             handleAsync(spaceId_, partId, code);
         } else {
             doPut(spaceId_, partId, std::move(data));
@@ -147,7 +147,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
         const auto& newEdges = part.second;
         std::vector<EMLI> dummyLock;
         dummyLock.reserve(newEdges.size());
-        cpp2::ErrorCode code = cpp2::ErrorCode::SUCCEEDED;
+        ErrorCode code = ErrorCode::SUCCEEDED;
 
         std::unordered_set<std::string> visited;
         visited.reserve(newEdges.size());
@@ -164,7 +164,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
                            << "space vid len: " << spaceVidLen_
                            << ", edge srcVid: " << *edgeKey.src_ref()
                            << ", dstVid: " << *edgeKey.dst_ref();
-                code = cpp2::ErrorCode::E_INVALID_VID;
+                code = ErrorCode::E_INVALID_VID;
                 break;
             }
 
@@ -182,7 +182,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
             if (!schema) {
                 LOG(ERROR) << "Space " << spaceId_ << ", Edge "
                            << *edgeKey.edge_type_ref() << " invalid";
-                code = cpp2::ErrorCode::E_EDGE_NOT_FOUND;
+                code = ErrorCode::E_EDGE_NOT_FOUND;
                 break;
             }
 
@@ -235,7 +235,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
                                 } else if (env_->checkIndexLocked(indexState)) {
                                     LOG(ERROR) << "The index has been locked: "
                                                << index->get_index_name();
-                                    code = cpp2::ErrorCode::E_DATA_CONFLICT_ERROR;
+                                    code = ErrorCode::E_DATA_CONFLICT_ERROR;
                                     break;
                                 } else {
                                     batchHolder->remove(std::move(oi));
@@ -260,7 +260,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
                                 } else if (env_->checkIndexLocked(indexState)) {
                                     LOG(ERROR) << "The index has been locked: "
                                                << index->get_index_name();
-                                    code = cpp2::ErrorCode::E_DATA_CONFLICT_ERROR;
+                                    code = ErrorCode::E_DATA_CONFLICT_ERROR;
                                     break;
                                 } else {
                                     batchHolder->put(std::move(nik), std::move(niv));
@@ -270,7 +270,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
                     }
                 }
             }
-            if (code != cpp2::ErrorCode::SUCCEEDED) {
+            if (code != ErrorCode::SUCCEEDED) {
                 break;
             }
             batchHolder->put(std::move(key), std::move(retEnc.value()));
@@ -281,7 +281,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
                                                    *edgeKey.ranking_ref(),
                                                    (*edgeKey.dst_ref()).getStr()));
         }
-        if (code != cpp2::ErrorCode::SUCCEEDED) {
+        if (code != ErrorCode::SUCCEEDED) {
             handleAsync(spaceId_, partId, code);
             continue;
         }
@@ -297,7 +297,7 @@ void AddEdgesProcessor::doProcessWithIndex(const cpp2::AddEdgesRequest& req) {
                         << std::get<3>(conflict) << ":"
                         << std::get<4>(conflict) << ":"
                         << std::get<5>(conflict);
-            handleAsync(spaceId_, partId, cpp2::ErrorCode::E_DATA_CONFLICT_ERROR);
+            handleAsync(spaceId_, partId, ErrorCode::E_DATA_CONFLICT_ERROR);
             continue;
         }
         env_->kvstore_->asyncAppendBatch(spaceId_, partId, std::move(batch),

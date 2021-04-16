@@ -51,17 +51,17 @@ protected:
 
     void onProcessFinished() override;
 
-    cpp2::ErrorCode checkAndBuildContexts(const cpp2::GetNeighborsRequest& req) override;
-    cpp2::ErrorCode buildTagContext(const cpp2::TraverseSpec& req);
-    cpp2::ErrorCode buildEdgeContext(const cpp2::TraverseSpec& req);
+    ErrorCode checkAndBuildContexts(const cpp2::GetNeighborsRequest& req) override;
+    ErrorCode buildTagContext(const cpp2::TraverseSpec& req);
+    ErrorCode buildEdgeContext(const cpp2::TraverseSpec& req);
 
     // build tag/edge col name in response when prop specified
     void buildTagColName(const std::vector<cpp2::VertexProp>& tagProps);
     void buildEdgeColName(const std::vector<cpp2::EdgeProp>& edgeProps);
 
     // add PropContext of stat
-    cpp2::ErrorCode handleEdgeStatProps(const std::vector<cpp2::StatProp>& statProps);
-    cpp2::ErrorCode checkStatType(const meta::SchemaProviderIf::Field* field,
+    ErrorCode handleEdgeStatProps(const std::vector<cpp2::StatProp>& statProps);
+    ErrorCode checkStatType(const meta::SchemaProviderIf::Field* field,
                                   cpp2::StatType statType);
 
 private:

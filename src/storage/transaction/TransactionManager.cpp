@@ -36,7 +36,7 @@ TransactionManager::TransactionManager(StorageEnv* env) : env_(env) {
  * *Important**Important**Important*
  * normally, ver will be 0
  * */
-folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
+folly::Future<ErrorCode> TransactionManager::addSamePartEdges(
     size_t vIdLen,
     GraphSpaceID spaceId,
     PartitionID localPart,
@@ -75,7 +75,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
     if (!setMemoryLock) {
         LOG(ERROR) << "set memory lock failed, txnId=" << txnId;
         cleanup();
-        return folly::makeFuture(cpp2::ErrorCode::E_MUTATE_EDGE_CONFLICT);
+        return folly::makeFuture(ErrorCode::E_MUTATE_EDGE_CONFLICT);
     } else {
         LOG_IF(INFO, FLAGS_trace_toss) << "set memory lock succeeded, txnId=" << txnId;
     }
@@ -86,7 +86,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
     // insert don't have BatchGetter
     if (!optBatchGetter) {
         // insert don't have batch Getter
-        auto addEdgeErrorCode = cpp2::ErrorCode::SUCCEEDED;
+        auto addEdgeErrorCode = ErrorCode::SUCCEEDED;
         std::transform(lockData.begin(), lockData.end(), lockData.begin(), [&](auto& kv) {
             if (processor) {
                 processor->spaceId_ = spaceId;
@@ -97,7 +97,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
                     return std::make_pair(NebulaKeyUtils::toLockKey(kv.first),
                                           nebula::value(optVal));
                 } else {
-                    addEdgeErrorCode = cpp2::ErrorCode::E_ATOMIC_OP_FAILED;
+                    addEdgeErrorCode = ErrorCode::E_ATOMIC_OP_FAILED;
                     return std::make_pair(NebulaKeyUtils::toLockKey(kv.first), std::string(""));
                 }
             } else {
@@ -106,7 +106,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
                                       encodeBatch(std::move(data)));
             }
         });
-        if (addEdgeErrorCode != cpp2::ErrorCode::SUCCEEDED) {
+        if (addEdgeErrorCode != ErrorCode::SUCCEEDED) {
             cleanup();
             return addEdgeErrorCode;
         }
@@ -116,7 +116,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
         auto optBatch = (*optBatchGetter)();
         if (!optBatch) {
             cleanup();
-            return cpp2::ErrorCode::E_ATOMIC_OP_FAILED;
+            return ErrorCode::E_ATOMIC_OP_FAILED;
         }
         lockData.back().first = NebulaKeyUtils::toLockKey(localEdges.back().first);
         batch = *optBatch;
@@ -128,19 +128,19 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
         lockData.back().second = batch;
     }
 
-    auto c = folly::makePromiseContract<cpp2::ErrorCode>();
+    auto c = folly::makePromiseContract<ErrorCode>();
     commitBatch(spaceId, localPart, std::move(batch))
         .via(exec_.get())
         .thenTry([=, p = std::move(c.first)](auto&& t) mutable {
-            auto code = cpp2::ErrorCode::SUCCEEDED;
+            auto code = ErrorCode::SUCCEEDED;
             if (!t.hasValue()) {
                 LOG(INFO) << "commitBatch throw ex=" << t.exception()
                     << ", txnId=" << txnId;
-                code = cpp2::ErrorCode::E_UNKNOWN;
+                code = ErrorCode::E_UNKNOWN;
             } else if (t.value() != kvstore::ResultCode::SUCCEEDED) {
                 code = CommonUtils::to(t.value());
             }
-            if (code != cpp2::ErrorCode::SUCCEEDED) {
+            if (code != ErrorCode::SUCCEEDED) {
                 LOG(INFO) << folly::sformat("commitBatch for ({},{},{}) failed, code={}, txnId={}",
                                             spaceId,
                                             localPart,
@@ -164,14 +164,14 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
             interClient_->forwardTransaction(txnId, spaceId, remotePart, std::move(remoteBatch))
                 .via(exec_.get())
                 .thenTry([=, p = std::move(p)](auto&& _t) mutable {
-                    auto _code = _t.hasValue() ? _t.value() : cpp2::ErrorCode::E_UNKNOWN;
+                    auto _code = _t.hasValue() ? _t.value() : ErrorCode::E_UNKNOWN;
                     LOG_IF(INFO, FLAGS_trace_toss) << folly::sformat(
                         "end forwardTransaction: txnId={}, spaceId={}, partId={}, code={}",
                         txnId,
                         spaceId,
                         remotePart,
                         static_cast<int32_t>(_code));
-                    if (_code != cpp2::ErrorCode::SUCCEEDED) {
+                    if (_code != ErrorCode::SUCCEEDED) {
                         p.setValue(_code);
                         return;
                     }
@@ -224,7 +224,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::addSamePartEdges(
     return std::move(c.second).via(exec_.get());
 }
 
-folly::Future<cpp2::ErrorCode> TransactionManager::updateEdgeAtomic(size_t vIdLen,
+folly::Future<ErrorCode> TransactionManager::updateEdgeAtomic(size_t vIdLen,
                                                                     GraphSpaceID spaceId,
                                                                     PartitionID partId,
                                                                     const cpp2::EdgeKey& edgeKey,
@@ -240,7 +240,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::updateEdgeAtomic(size_t vIdLe
     return addSamePartEdges(vIdLen, spaceId, partId, remotePart, data, nullptr, batchGetter);
 }
 
-folly::Future<cpp2::ErrorCode> TransactionManager::resumeTransaction(size_t vIdLen,
+folly::Future<ErrorCode> TransactionManager::resumeTransaction(size_t vIdLen,
                                                                      GraphSpaceID spaceId,
                                                                      std::string lockKey,
                                                                      ResumedResult result) {
@@ -252,18 +252,18 @@ folly::Future<cpp2::ErrorCode> TransactionManager::resumeTransaction(size_t vIdL
     auto ver = NebulaKeyUtils::getLockVersion(lockKey);
     auto keyWoVer = NebulaKeyUtils::keyWithNoVersion(localKey).str();
     if (!memLock_.insert(std::make_pair(keyWoVer, ver)).second) {
-        return folly::makeFuture(cpp2::ErrorCode::E_MUTATE_EDGE_CONFLICT);
+        return folly::makeFuture(ErrorCode::E_MUTATE_EDGE_CONFLICT);
     }
 
     auto localPart = NebulaKeyUtils::getPart(localKey);
     // 2nd, get values from remote in-edge
-    auto spPromiseVal = std::make_shared<cpp2::ErrorCode>(cpp2::ErrorCode::SUCCEEDED);
-    auto c = folly::makePromiseContract<cpp2::ErrorCode>();
+    auto spPromiseVal = std::make_shared<ErrorCode>(ErrorCode::SUCCEEDED);
+    auto c = folly::makePromiseContract<ErrorCode>();
 
     auto dst = NebulaKeyUtils::getDstId(vIdLen, localKey);
     auto stRemotePartId = env_->metaClient_->partId(spaceId, dst.str());
     if (!stRemotePartId.ok()) {
-        return cpp2::ErrorCode::E_SPACE_NOT_FOUND;
+        return ErrorCode::E_SPACE_NOT_FOUND;
     }
     auto remoteKey = TransactionUtils::reverseRawKey(vIdLen, stRemotePartId.value(), localKey);
 
@@ -280,7 +280,7 @@ folly::Future<cpp2::ErrorCode> TransactionManager::resumeTransaction(size_t vIdL
             }
             auto lockedPtr = result->wlock();
             if (!lockedPtr) {
-                *spPromiseVal = cpp2::ErrorCode::E_MUTATE_EDGE_CONFLICT;
+                *spPromiseVal = ErrorCode::E_MUTATE_EDGE_CONFLICT;
                 return;
             }
             auto& kv = *lockedPtr;
@@ -299,24 +299,24 @@ folly::Future<cpp2::ErrorCode> TransactionManager::resumeTransaction(size_t vIdL
                     spaceId, localPart, std::string(kv.first), std::string(kv.second))
                     .via(exec_.get())
                     .thenValue([=](auto&& rc) { *spPromiseVal = CommonUtils::to(rc); })
-                    .thenError([=](auto&&) { *spPromiseVal = cpp2::ErrorCode::E_UNKNOWN; });
+                    .thenError([=](auto&&) { *spPromiseVal = ErrorCode::E_UNKNOWN; });
         })
         .thenValue([=](auto&&) {
             // 4th, remove persist lock
             LOG_IF(INFO, FLAGS_trace_toss) << "erase lock " << folly::hexlify(lockKey)
                 << ", *spPromiseVal=" << apache::thrift::util::enumNameSafe(*spPromiseVal);
-            if (*spPromiseVal == cpp2::ErrorCode::SUCCEEDED ||
-                *spPromiseVal == cpp2::ErrorCode::E_KEY_NOT_FOUND ||
-                *spPromiseVal == cpp2::ErrorCode::E_OUTDATED_LOCK) {
+            if (*spPromiseVal == ErrorCode::SUCCEEDED ||
+                *spPromiseVal == ErrorCode::E_KEY_NOT_FOUND ||
+                *spPromiseVal == ErrorCode::E_OUTDATED_LOCK) {
                 auto eraseRet = eraseKey(spaceId, localPart, lockKey);
                 eraseRet.wait();
-                auto code = eraseRet.hasValue() ? eraseRet.value() : cpp2::ErrorCode::E_UNKNOWN;
+                auto code = eraseRet.hasValue() ? eraseRet.value() : ErrorCode::E_UNKNOWN;
                 *spPromiseVal = code;
             }
         })
         .thenError([=](auto&& ex) {
             LOG(ERROR) << ex.what();
-            *spPromiseVal = cpp2::ErrorCode::E_UNKNOWN;
+            *spPromiseVal = ErrorCode::E_UNKNOWN;
         })
         .ensure([=, p = std::move(c.first)]() mutable {
             eraseMemoryLock(localKey, ver);
@@ -396,11 +396,11 @@ folly::SemiFuture<kvstore::ResultCode> TransactionManager::commitEdge(GraphSpace
     return std::move(c.second);
 }
 
-folly::SemiFuture<cpp2::ErrorCode> TransactionManager::eraseKey(GraphSpaceID spaceId,
+folly::SemiFuture<ErrorCode> TransactionManager::eraseKey(GraphSpaceID spaceId,
                                                                 PartitionID partId,
                                                                 const std::string& key) {
     LOG_IF(INFO, FLAGS_trace_toss) << "eraseKey: " << folly::hexlify(key);
-    auto c = folly::makePromiseContract<cpp2::ErrorCode>();
+    auto c = folly::makePromiseContract<ErrorCode>();
     env_->kvstore_->asyncRemove(
         spaceId,
         partId,

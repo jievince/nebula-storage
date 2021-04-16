@@ -73,8 +73,8 @@ TEST_F(StatisTaskTest, StatisTagAndEdgeData) {
         request.set_para(std::move(parameter));
 
         nebula::meta::cpp2::StatisItem statisItem;
-        auto callback = [&](cpp2::ErrorCode ret, nebula::meta::cpp2::StatisItem& result) {
-            if (ret != cpp2::ErrorCode::SUCCEEDED) {
+        auto callback = [&](ErrorCode ret, nebula::meta::cpp2::StatisItem& result) {
+            if (ret != ErrorCode::SUCCEEDED) {
                 // Do nothing
             } else {
                 if (result.get_status() == nebula::meta::cpp2::JobStatus::FINISHED) {
@@ -138,8 +138,8 @@ TEST_F(StatisTaskTest, StatisTagAndEdgeData) {
         request.set_para(std::move(parameter));
 
         nebula::meta::cpp2::StatisItem statisItem;
-        auto callback = [&](cpp2::ErrorCode ret, nebula::meta::cpp2::StatisItem& result) {
-            if (ret != cpp2::ErrorCode::SUCCEEDED) {
+        auto callback = [&](ErrorCode ret, nebula::meta::cpp2::StatisItem& result) {
+            if (ret != ErrorCode::SUCCEEDED) {
                 // Do nothing
             } else {
                 if (result.get_status() == nebula::meta::cpp2::JobStatus::FINISHED) {
@@ -209,8 +209,8 @@ TEST_F(StatisTaskTest, StatisTagAndEdgeData) {
         request.set_para(std::move(parameter));
 
         nebula::meta::cpp2::StatisItem statisItem;
-        auto callback = [&](cpp2::ErrorCode ret, nebula::meta::cpp2::StatisItem& result) {
-            if (ret != cpp2::ErrorCode::SUCCEEDED) {
+        auto callback = [&](ErrorCode ret, nebula::meta::cpp2::StatisItem& result) {
+            if (ret != ErrorCode::SUCCEEDED) {
                 // Do nothing
             } else {
                 if (result.get_status() == nebula::meta::cpp2::JobStatus::FINISHED) {

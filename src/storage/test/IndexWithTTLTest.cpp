@@ -436,7 +436,7 @@ TEST(IndexWithTTLTest, RebuildTagIndexWithTTL) {
     request.set_task_id(13);
     request.set_para(std::move(parameter));
 
-    auto callback = [](cpp2::ErrorCode, nebula::meta::cpp2::StatisItem&) {};
+    auto callback = [](ErrorCode, nebula::meta::cpp2::StatisItem&) {};
     TaskContext context(request, callback);
 
     auto task = std::make_shared<RebuildTagIndexTask>(env, std::move(context));
@@ -505,7 +505,7 @@ TEST(IndexWithTTLTest, RebuildEdgeIndexWithTTL) {
     request.set_task_id(13);
     request.set_para(std::move(parameter));
 
-    auto callback = [](cpp2::ErrorCode, nebula::meta::cpp2::StatisItem&) {};
+    auto callback = [](ErrorCode, nebula::meta::cpp2::StatisItem&) {};
     TaskContext context(request, callback);
 
     auto task = std::make_shared<RebuildEdgeIndexTask>(env, std::move(context));
@@ -576,7 +576,7 @@ TEST(IndexWithTTLTest, RebuildTagIndexWithTTLExpired) {
     request.set_task_id(13);
     request.set_para(std::move(parameter));
 
-    auto callback = [](cpp2::ErrorCode, nebula::meta::cpp2::StatisItem&) {};
+    auto callback = [](ErrorCode, nebula::meta::cpp2::StatisItem&) {};
     TaskContext context(request, callback);
 
     auto task = std::make_shared<RebuildTagIndexTask>(env, std::move(context));
@@ -647,7 +647,7 @@ TEST(IndexWithTTLTest, RebuildEdgeIndexWithTTLExpired) {
     request.set_task_id(15);
     request.set_para(std::move(parameter));
 
-    auto callback = [](cpp2::ErrorCode, nebula::meta::cpp2::StatisItem&) {};
+    auto callback = [](ErrorCode, nebula::meta::cpp2::StatisItem&) {};
     TaskContext context(request, callback);
 
     auto task = std::make_shared<RebuildEdgeIndexTask>(env, std::move(context));

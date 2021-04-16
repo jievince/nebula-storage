@@ -10,32 +10,32 @@ namespace nebula {
 namespace storage {
 
 template<typename RESP>
-cpp2::ErrorCode BaseProcessor<RESP>::to(kvstore::ResultCode code) {
+ErrorCode BaseProcessor<RESP>::to(kvstore::ResultCode code) {
     return CommonUtils::to(code);
 }
 
 template <typename RESP>
-cpp2::ErrorCode BaseProcessor<RESP>::writeResultTo(WriteResult code, bool isEdge) {
+ErrorCode BaseProcessor<RESP>::writeResultTo(WriteResult code, bool isEdge) {
     switch (code) {
     case WriteResult::SUCCEEDED:
-        return cpp2::ErrorCode::SUCCEEDED;
+        return ErrorCode::SUCCEEDED;
     case WriteResult::UNKNOWN_FIELD:
         if (isEdge) {
-            return cpp2::ErrorCode::E_EDGE_PROP_NOT_FOUND;
+            return ErrorCode::E_EDGE_PROP_NOT_FOUND;
         }
-        return cpp2::ErrorCode::E_TAG_PROP_NOT_FOUND;
+        return ErrorCode::E_TAG_PROP_NOT_FOUND;
     case WriteResult::NOT_NULLABLE:
-        return cpp2::ErrorCode::E_NOT_NULLABLE;
+        return ErrorCode::E_NOT_NULLABLE;
     case WriteResult::TYPE_MISMATCH:
-        return cpp2::ErrorCode::E_DATA_TYPE_MISMATCH;
+        return ErrorCode::E_DATA_TYPE_MISMATCH;
     case WriteResult::FIELD_UNSET:
-        return cpp2::ErrorCode::E_FIELD_UNSET;
+        return ErrorCode::E_FIELD_UNSET;
     case WriteResult::OUT_OF_RANGE:
-        return cpp2::ErrorCode::E_OUT_OF_RANGE;
+        return ErrorCode::E_OUT_OF_RANGE;
     case WriteResult::INCORRECT_VALUE:
-        return cpp2::ErrorCode::E_INVALID_FIELD_VALUE;
+        return ErrorCode::E_INVALID_FIELD_VALUE;
     default:
-        return cpp2::ErrorCode::E_UNKNOWN;
+        return ErrorCode::E_UNKNOWN;
     }
 }
 
@@ -63,7 +63,7 @@ void BaseProcessor<RESP>::handleAsync(GraphSpaceID spaceId,
 template <typename RESP>
 void BaseProcessor<RESP>::handleAsync(GraphSpaceID,
                                       PartitionID partId,
-                                      cpp2::ErrorCode code) {
+                                      ErrorCode code) {
     VLOG(3) << "partId:" << partId << ", code:" << static_cast<int32_t>(code);
 
     bool finished = false;
@@ -91,24 +91,24 @@ meta::cpp2::ColumnDef BaseProcessor<RESP>::columnDef(std::string name,
 }
 
 template <typename RESP>
-void BaseProcessor<RESP>::pushResultCode(cpp2::ErrorCode code, PartitionID partId) {
-    if (code != cpp2::ErrorCode::SUCCEEDED) {
-        cpp2::PartitionResult thriftRet;
-        thriftRet.set_code(code);
-        thriftRet.set_part_id(partId);
+void BaseProcessor<RESP>::pushResultCode(ErrorCode code, PartitionID partId) {
+    if (code != ErrorCode::SUCCEEDED) {
+        nebula::PartitionResult thriftRet;
+        thriftRet.code = code;
+        thriftRet.partId = partId;
         codes_.emplace_back(std::move(thriftRet));
     }
 }
 
 template <typename RESP>
-void BaseProcessor<RESP>::pushResultCode(cpp2::ErrorCode code,
+void BaseProcessor<RESP>::pushResultCode(ErrorCode code,
                                          PartitionID partId,
                                          HostAddr leader) {
-    if (code != cpp2::ErrorCode::SUCCEEDED) {
-        cpp2::PartitionResult thriftRet;
-        thriftRet.set_code(code);
-        thriftRet.set_part_id(partId);
-        thriftRet.set_leader(leader);
+    if (code != ErrorCode::SUCCEEDED) {
+        nebula::PartitionResult thriftRet;
+        thriftRet.code = code;
+        thriftRet.partId = partId;
+        thriftRet.leader.reset(new HostAddr(leader));
         codes_.emplace_back(std::move(thriftRet));
     }
 }
@@ -132,7 +132,7 @@ void BaseProcessor<RESP>::handleLeaderChanged(GraphSpaceID spaceId,
     auto addrRet = env_->kvstore_->partLeader(spaceId, partId);
     if (ok(addrRet)) {
         auto leader = value(std::move(addrRet));
-        this->pushResultCode(cpp2::ErrorCode::E_LEADER_CHANGED, partId, leader);
+        this->pushResultCode(ErrorCode::E_LEADER_CHANGED, partId, leader);
     } else {
         LOG(ERROR) << "Fail to get part leader, spaceId: " << spaceId
                    << ", partId: " << partId << ", ResultCode: " << error(addrRet);

@@ -32,7 +32,7 @@ void AddEdgesAtomicProcessor::process(const cpp2::AddEdgesRequest& req) {
     if (!stVidLen.ok()) {
         LOG(ERROR) << stVidLen.status();
         for (auto& part : req.get_parts()) {
-            pushResultCode(cpp2::ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
+            pushResultCode(ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
         }
         onFinished();
         return;
@@ -43,7 +43,7 @@ void AddEdgesAtomicProcessor::process(const cpp2::AddEdgesRequest& req) {
 
 void AddEdgesAtomicProcessor::processByChain(const cpp2::AddEdgesRequest& req) {
     std::unordered_map<ChainId, std::vector<KV>> edgesByChain;
-    std::unordered_map<PartitionID, cpp2::ErrorCode> failedPart;
+    std::unordered_map<PartitionID, ErrorCode> failedPart;
     // split req into chains
     for (auto& part : *req.parts_ref()) {
         auto localPart = part.first;
@@ -51,7 +51,7 @@ void AddEdgesAtomicProcessor::processByChain(const cpp2::AddEdgesRequest& req) {
             auto stPartId = env_->metaClient_->partId(spaceId_,
                     (*(*edge.key_ref()).dst_ref()).getStr());
             if (!stPartId.ok()) {
-                failedPart[localPart] = cpp2::ErrorCode::E_SPACE_NOT_FOUND;
+                failedPart[localPart] = ErrorCode::E_SPACE_NOT_FOUND;
                 break;
             }
             auto remotePart = stPartId.value();
@@ -64,7 +64,7 @@ void AddEdgesAtomicProcessor::processByChain(const cpp2::AddEdgesRequest& req) {
             auto key = TransactionUtils::edgeKey(vIdLen_, localPart, edge.get_key());
             std::string val;
             auto code = encodeSingleEdgeProps(edge, val);
-            if (code != cpp2::ErrorCode::SUCCEEDED) {
+            if (code != ErrorCode::SUCCEEDED) {
                 failedPart[localPart] = code;
                 break;;
             }
@@ -84,7 +84,7 @@ void AddEdgesAtomicProcessor::processByChain(const cpp2::AddEdgesRequest& req) {
     auto stIndex = env_->indexMan_->getEdgeIndexes(spaceId_);
     if (!stIndex.ok()) {
          for (auto& part : *req.parts_ref())  {
-            pushResultCode(cpp2::ErrorCode::E_SPACE_NOT_FOUND, part.first);
+            pushResultCode(ErrorCode::E_SPACE_NOT_FOUND, part.first);
         }
         onFinished();
         return;
@@ -105,10 +105,10 @@ void AddEdgesAtomicProcessor::processByChain(const cpp2::AddEdgesRequest& req) {
                 ->addSamePartEdges(
                     vIdLen_, spaceId_, localPart, remotePart, localData, processor_.get())
                 .thenTry([=](auto&& t) {
-                    auto code = cpp2::ErrorCode::SUCCEEDED;
+                    auto code = ErrorCode::SUCCEEDED;
                     if (!t.hasValue()) {
-                        code = cpp2::ErrorCode::E_UNKNOWN;
-                    } else if (t.value() != cpp2::ErrorCode::SUCCEEDED) {
+                        code = ErrorCode::E_UNKNOWN;
+                    } else if (t.value() != ErrorCode::SUCCEEDED) {
                         code = t.value();
                     }
                     LOG_IF(INFO, FLAGS_trace_toss) << folly::sformat(
@@ -117,7 +117,7 @@ void AddEdgesAtomicProcessor::processByChain(const cpp2::AddEdgesRequest& req) {
                         localPart,
                         remotePart,
                         static_cast<int32_t>(code));
-                    if (code != cpp2::ErrorCode::SUCCEEDED) {
+                    if (code != ErrorCode::SUCCEEDED) {
                         pushResultCode(code, localPart);
                     }
                 }));
@@ -127,23 +127,23 @@ void AddEdgesAtomicProcessor::processByChain(const cpp2::AddEdgesRequest& req) {
     });
 }
 
-cpp2::ErrorCode AddEdgesAtomicProcessor::encodeSingleEdgeProps(const cpp2::NewEdge& e,
+ErrorCode AddEdgesAtomicProcessor::encodeSingleEdgeProps(const cpp2::NewEdge& e,
                                                                std::string& encodedVal) {
     auto edgeType = e.get_key().get_edge_type();
     auto schema = env_->schemaMan_->getEdgeSchema(spaceId_, std::abs(edgeType));
     if (!schema) {
         LOG(ERROR) << "Space " << spaceId_ << ", Edge " << edgeType << " invalid";
-        return cpp2::ErrorCode::E_SPACE_NOT_FOUND;
+        return ErrorCode::E_SPACE_NOT_FOUND;
     }
     WriteResult wRet;
     auto& edgeProps = e.get_props();
     auto stEncodedVal = encodeRowVal(schema.get(), propNames_, edgeProps, wRet);
     if (!stEncodedVal.ok()) {
         LOG(ERROR) << stEncodedVal.status();
-        return cpp2::ErrorCode::E_DATA_TYPE_MISMATCH;
+        return ErrorCode::E_DATA_TYPE_MISMATCH;
     }
     encodedVal = stEncodedVal.value();
-    return cpp2::ErrorCode::SUCCEEDED;
+    return ErrorCode::SUCCEEDED;
 }
 
 }   // namespace storage

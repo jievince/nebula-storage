@@ -48,7 +48,7 @@ public:
      *        get a batch of raft operations.
      *        used by updateNode, need to run this func after edge locked
      * */
-    folly::Future<cpp2::ErrorCode> addSamePartEdges(
+    folly::Future<ErrorCode> addSamePartEdges(
         size_t vIdLen,
         GraphSpaceID spaceId,
         PartitionID localPart,
@@ -66,7 +66,7 @@ public:
      *        and addSamePartEdges() will set a lock to edge,
      *        I would like to forward this function to addSamePartEdges()
      * */
-    folly::Future<cpp2::ErrorCode> updateEdgeAtomic(size_t vIdLen,
+    folly::Future<ErrorCode> updateEdgeAtomic(size_t vIdLen,
                                                     GraphSpaceID spaceId,
                                                     PartitionID partId,
                                                     const cpp2::EdgeKey& edgeKey,
@@ -79,7 +79,7 @@ public:
      * 2. if mvcc enabled, will commit the value of lock
      *       else, get props from in-edge, then re-check index and commit
      * */
-    folly::Future<cpp2::ErrorCode> resumeTransaction(size_t vIdLen,
+    folly::Future<ErrorCode> resumeTransaction(size_t vIdLen,
                                                      GraphSpaceID spaceId,
                                                      std::string lockKey,
                                                      ResumedResult result = nullptr);
@@ -108,7 +108,7 @@ protected:
                                                       std::string& key,
                                                       std::string& encodedProp);
 
-    folly::SemiFuture<cpp2::ErrorCode>
+    folly::SemiFuture<ErrorCode>
     eraseKey(GraphSpaceID spaceId, PartitionID partId, const std::string& key);
 
     void eraseMemoryLock(const std::string& rawKey, int64_t ver);

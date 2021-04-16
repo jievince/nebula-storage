@@ -12,17 +12,17 @@
 namespace nebula {
 namespace storage {
 
-cpp2::ErrorCode
+ErrorCode
 StatisTask::getSchemas(GraphSpaceID spaceId) {
     CHECK_NOTNULL(env_->schemaMan_);
     auto tags = env_->schemaMan_->getAllVerTagSchema(spaceId);
     if (!tags.ok()) {
-        return cpp2::ErrorCode::E_SPACE_NOT_FOUND;
+        return ErrorCode::E_SPACE_NOT_FOUND;
     }
 
     auto edges = env_->schemaMan_->getAllVerEdgeSchema(spaceId);
     if (!edges.ok()) {
-        return cpp2::ErrorCode::E_SPACE_NOT_FOUND;
+        return ErrorCode::E_SPACE_NOT_FOUND;
     }
 
     for (auto tag : tags.value()) {
@@ -45,17 +45,17 @@ StatisTask::getSchemas(GraphSpaceID spaceId) {
         }
         edges_.emplace(edgeType, std::move(edgeNameRet.value()));
     }
-    return cpp2::ErrorCode::SUCCEEDED;
+    return ErrorCode::SUCCEEDED;
 }
 
-ErrorOr<cpp2::ErrorCode, std::vector<AdminSubTask>>
+ErrorOr<ErrorCode, std::vector<AdminSubTask>>
 StatisTask::genSubTasks() {
     spaceId_ = *ctx_.parameters_.space_id_ref();
     auto parts = *ctx_.parameters_.parts_ref();
     subTaskSize_ = parts.size();
 
     auto ret = getSchemas(spaceId_);
-    if (ret != cpp2::ErrorCode::SUCCEEDED) {
+    if (ret != ErrorCode::SUCCEEDED) {
         LOG(ERROR) << "Space not found, spaceId: " << spaceId_;
         return ret;
     }
@@ -269,13 +269,13 @@ StatisTask::genSubTask(GraphSpaceID spaceId,
     return kvstore::ResultCode::SUCCEEDED;
 }
 
-void StatisTask::finish(cpp2::ErrorCode rc) {
+void StatisTask::finish(ErrorCode rc) {
     FLOG_INFO("task(%d, %d) finished, rc=[%d]", ctx_.jobId_, ctx_.taskId_,
               static_cast<int>(rc));
     nebula::meta::cpp2::StatisItem  result;
     result.set_status(nebula::meta::cpp2::JobStatus::FAILED);
 
-    if (rc == cpp2::ErrorCode::SUCCEEDED && statistics_.size() == subTaskSize_) {
+    if (rc == ErrorCode::SUCCEEDED && statistics_.size() == subTaskSize_) {
         result.set_space_vertices(0);
         result.set_space_edges(0);
         for (auto& elem : statistics_) {
@@ -312,11 +312,11 @@ void StatisTask::finish(cpp2::ErrorCode rc) {
         }
         result.set_status(nebula::meta::cpp2::JobStatus::FINISHED);
         ctx_.onFinish_(rc, result);
-    } else if (rc != cpp2::ErrorCode::SUCCEEDED) {
+    } else if (rc != ErrorCode::SUCCEEDED) {
         ctx_.onFinish_(rc, result);
     } else {
         LOG(ERROR) << "The number of subtasks is not equal to the number of parts";
-        ctx_.onFinish_(cpp2::ErrorCode::E_PART_NOT_FOUND, result);
+        ctx_.onFinish_(ErrorCode::E_PART_NOT_FOUND, result);
     }
 }
 

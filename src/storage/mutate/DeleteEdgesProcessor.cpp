@@ -24,7 +24,7 @@ void DeleteEdgesProcessor::process(const cpp2::DeleteEdgesRequest& req) {
     if (!ret.ok()) {
         LOG(ERROR) << ret.status();
         for (auto& part : partEdges) {
-            pushResultCode(cpp2::ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
+            pushResultCode(ErrorCode::E_INVALID_SPACEVIDLEN, part.first);
         }
         onFinished();
         return;
@@ -37,7 +37,7 @@ void DeleteEdgesProcessor::process(const cpp2::DeleteEdgesRequest& req) {
     if (!iRet.ok()) {
         LOG(ERROR) << iRet.status();
         for (auto& part : partEdges) {
-            pushResultCode(cpp2::ErrorCode::E_SPACE_NOT_FOUND, part.first);
+            pushResultCode(ErrorCode::E_SPACE_NOT_FOUND, part.first);
         }
         onFinished();
         return;
@@ -51,7 +51,7 @@ void DeleteEdgesProcessor::process(const cpp2::DeleteEdgesRequest& req) {
             std::vector<std::string> keys;
             keys.reserve(32);
             auto partId = part.first;
-            cpp2::ErrorCode code = cpp2::ErrorCode::SUCCEEDED;
+            ErrorCode code = ErrorCode::SUCCEEDED;
             for (auto& edgeKey : part.second) {
                 if (!NebulaKeyUtils::isValidVidLen(
                         spaceVidLen_,
@@ -61,7 +61,7 @@ void DeleteEdgesProcessor::process(const cpp2::DeleteEdgesRequest& req) {
                                << "space vid len: " << spaceVidLen_
                                << ", edge srcVid: " << *edgeKey.src_ref()
                                << " dstVid: " << *edgeKey.dst_ref();
-                    code = cpp2::ErrorCode::E_INVALID_VID;
+                    code = ErrorCode::E_INVALID_VID;
                     break;
                 }
                 // todo(doodle): delete lock in toss
@@ -73,7 +73,7 @@ void DeleteEdgesProcessor::process(const cpp2::DeleteEdgesRequest& req) {
                                                     (*edgeKey.dst_ref()).getStr());
                 keys.emplace_back(edge.data(), edge.size());
             }
-            if (code != cpp2::ErrorCode::SUCCEEDED) {
+            if (code != ErrorCode::SUCCEEDED) {
                 handleAsync(spaceId_, partId, code);
                 continue;
             }
@@ -110,7 +110,7 @@ void DeleteEdgesProcessor::process(const cpp2::DeleteEdgesRequest& req) {
                         << std::get<3>(conflict) << ":"
                         << std::get<4>(conflict) << ":"
                         << std::get<5>(conflict);
-                handleAsync(spaceId_, partId, cpp2::ErrorCode::E_DATA_CONFLICT_ERROR);
+                handleAsync(spaceId_, partId, ErrorCode::E_DATA_CONFLICT_ERROR);
                 continue;
             }
             env_->kvstore_->asyncAppendBatch(spaceId_, partId, std::move(nebula::value(batch)),
