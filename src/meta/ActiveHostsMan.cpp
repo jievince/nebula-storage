@@ -48,7 +48,8 @@ kvstore::ResultCode ActiveHostsMan::updateHostInfo(kvstore::KVStore* kv,
             if (statuses[i].ok()) {
                 std::tie(std::ignore, term, code) = MetaServiceUtils::parseLeaderValV3(vals[i]);
                 if (code != cpp2::ErrorCode::SUCCEEDED) {
-                    LOG(WARNING) << apache::thrift::util::enumNameSafe(code);
+                    // LOG(WARNING) << apache::thrift::util::enumNameSafe(code);
+                    LOG(WARNING) << "fuck";
                     continue;
                 }
                 if (terms[i] <= term) {

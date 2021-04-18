@@ -186,7 +186,8 @@ struct TossEnvironment {
             auto f = addEdgesAsync(edges, useToss);
             f.wait();
             if (!f.valid()) {
-                LOG(INFO) << apache::thrift::util::enumNameSafe(ErrorCode::E_UNKNOWN);
+                // LOG(INFO) << apache::thrift::util::enumNameSafe(ErrorCode::E_UNKNOWN);
+                LOG(INFO) << "fuck";
                 return ErrorCode::E_UNKNOWN;
             }
             if (!f.value().succeeded()) {
@@ -194,7 +195,9 @@ struct TossEnvironment {
                 LOG(INFO) << "f.value().failedParts().size()=" << f.value().failedParts().size();
                 for (auto& part : f.value().failedParts()) {
                     LOG(INFO) << "partId=" << part.first
-                              << ", ec=" << apache::thrift::util::enumNameSafe(part.second);
+                              << ", ec="
+                              // << apache::thrift::util::enumNameSafe(part.second);
+                              // "fuck";
                     if (part.second == ErrorCode::E_LEADER_CHANGED) {
                         retLeaderChange = true;
                     }
@@ -287,7 +290,9 @@ struct TossEnvironment {
                 LOG(INFO) << "rpcResp.failedParts().size()=" << rpcResp.failedParts().size();
                 for (auto& p : rpcResp.failedParts()) {
                     LOG(INFO) << "failedPart: " << p.first
-                              << ", err=" << apache::thrift::util::enumNameSafe(p.second);
+                              << ", err="
+                              // << apache::thrift::util::enumNameSafe(p.second);
+                              << "fuck";
                     if (p.second == ErrorCode::E_LEADER_CHANGED) {
                         needRetry = true;
                         continue;

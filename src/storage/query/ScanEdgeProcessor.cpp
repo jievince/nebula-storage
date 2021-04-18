@@ -126,7 +126,7 @@ void ScanEdgeProcessor::buildEdgeColName(const std::vector<cpp2::EdgeProp>& edge
 }
 
 void ScanEdgeProcessor::onProcessFinished() {
-    resp_.set_edge_data(std::move(resultDataSet_));
+    resp_.edgeData = std::move(resultDataSet_);
 }
 
 }  // namespace storage

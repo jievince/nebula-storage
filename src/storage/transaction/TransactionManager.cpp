@@ -304,7 +304,9 @@ folly::Future<ErrorCode> TransactionManager::resumeTransaction(size_t vIdLen,
         .thenValue([=](auto&&) {
             // 4th, remove persist lock
             LOG_IF(INFO, FLAGS_trace_toss) << "erase lock " << folly::hexlify(lockKey)
-                << ", *spPromiseVal=" << apache::thrift::util::enumNameSafe(*spPromiseVal);
+                << ", *spPromiseVal="
+                // << apache::thrift::util::enumNameSafe(*spPromiseVal);
+                << "fuck";
             if (*spPromiseVal == ErrorCode::SUCCEEDED ||
                 *spPromiseVal == ErrorCode::E_KEY_NOT_FOUND ||
                 *spPromiseVal == ErrorCode::E_OUTDATED_LOCK) {

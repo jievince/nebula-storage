@@ -90,10 +90,10 @@ void ScanVertexProcessor::doProcess(const cpp2::ScanVertexRequest& req) {
     }
 
     if (iter->valid()) {
-        resp_.set_has_next(true);
-        resp_.set_next_cursor(iter->key().str());
+        resp_.hasNext = true;
+        resp_.nextCursor.reset(new std::string(iter->key().str()));
     } else {
-        resp_.set_has_next(false);
+        resp_.hasNext = false;
     }
     onProcessFinished();
     onFinished();
@@ -122,7 +122,7 @@ void ScanVertexProcessor::buildTagColName(const std::vector<cpp2::VertexProp>& t
 }
 
 void ScanVertexProcessor::onProcessFinished() {
-    resp_.set_vertex_data(std::move(resultDataSet_));
+    resp_.vertexData = std::move(resultDataSet_);
 }
 
 }  // namespace storage

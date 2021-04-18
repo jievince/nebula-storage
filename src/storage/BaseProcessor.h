@@ -47,7 +47,7 @@ protected:
 
         this->result_.latencyInUs = this->duration_.elapsedInUSec();
         this->result_.failedParts = this->codes_;
-        this->resp_.result = std::move(this->result_);
+        this->resp_.set_result(std::move(this->result_));
         this->promise_.setValue(std::move(this->resp_));
 
         if (counters_) {
