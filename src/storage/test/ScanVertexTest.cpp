@@ -104,8 +104,8 @@ TEST(ScanVertexTest, PropertyTest) {
             processor->process(req);
             auto resp = std::move(f).get();
 
-            ASSERT_EQ(0, resp.result.failed_parts.size());
-            checkResponse(*resp.vertex_data_ref(), tag, tag.second.size(), totalRowCount);
+            ASSERT_EQ(0, resp.result.failedParts.size());
+            checkResponse(resp.vertexData, tag, tag.second.size(), totalRowCount);
         }
         CHECK_EQ(mock::MockData::players_.size(), totalRowCount);
     }
@@ -120,9 +120,9 @@ TEST(ScanVertexTest, PropertyTest) {
             processor->process(req);
             auto resp = std::move(f).get();
 
-            ASSERT_EQ(0, resp.result.failed_parts.size());
+            ASSERT_EQ(0, resp.result.failedParts.size());
             // all 11 columns in value
-            checkResponse(*resp.vertex_data_ref(), tag, 11, totalRowCount);
+            checkResponse(resp.vertexData, tag, 11, totalRowCount);
         }
         CHECK_EQ(mock::MockData::players_.size(), totalRowCount);
     }
@@ -154,12 +154,12 @@ TEST(ScanVertexTest, CursorTest) {
                 processor->process(req);
                 auto resp = std::move(f).get();
 
-                ASSERT_EQ(0, resp.result.failed_parts.size());
-                checkResponse(*resp.vertex_data_ref(), tag, tag.second.size(), totalRowCount);
-                hasNext = resp.get_has_next();
+                ASSERT_EQ(0, resp.result.failedParts.size());
+                checkResponse(resp.vertexData, tag, tag.second.size(), totalRowCount);
+                hasNext = resp.hasNext;
                 if (hasNext) {
-                    CHECK(resp.next_cursor_ref());
-                    cursor = *resp.next_cursor_ref();
+                    CHECK(resp.nextCursor != nullptr);
+                    cursor = *resp.nextCursor;
                 }
             }
         }
@@ -180,12 +180,12 @@ TEST(ScanVertexTest, CursorTest) {
                 processor->process(req);
                 auto resp = std::move(f).get();
 
-                ASSERT_EQ(0, resp.result.failed_parts.size());
-                checkResponse(*resp.vertex_data_ref(), tag, tag.second.size(), totalRowCount);
-                hasNext = resp.get_has_next();
+                ASSERT_EQ(0, resp.result.failedParts.size());
+                checkResponse(resp.vertexData, tag, tag.second.size(), totalRowCount);
+                hasNext = resp.hasNext;
                 if (hasNext) {
-                    CHECK(resp.next_cursor_ref());
-                    cursor = *resp.next_cursor_ref();
+                    CHECK(resp.nextCursor != nullptr);
+                    cursor = *resp.nextCursor;
                 }
             }
         }

@@ -463,7 +463,7 @@ void insertVertex(int32_t iters) {
         auto f = processor->getFuture();
         processor->process(req);
         auto resp = std::move(f).get();
-        if (!resp.result.failed_parts.empty()) {
+        if (!resp.result.failedParts.empty()) {
             LOG(ERROR) << "Add faild";
             return;
         }
@@ -484,7 +484,7 @@ void insertEdge(int32_t iters) {
         auto f = processor->getFuture();
         processor->process(req);
         auto resp = std::move(f).get();
-        if (!resp.result.failed_parts.empty()) {
+        if (!resp.result.failedParts.empty()) {
             LOG(ERROR) << "Add faild";
             return;
         }
@@ -505,7 +505,7 @@ void updateVertex(int32_t iters, bool isVersion2) {
         auto f = processor->getFuture();
         processor->process(req);
         auto resp = std::move(f).get();
-        if (!resp.result.failed_parts.empty()) {
+        if (!resp.result.failedParts.empty()) {
             LOG(ERROR) << "update faild";
             return;
         }
@@ -526,7 +526,7 @@ void updateEdge(int32_t iters, bool isVersion2) {
         processor->process(req);
         auto resp = std::move(f).get();
 
-        if (!resp.result.failed_parts.empty()) {
+        if (!resp.result.failedParts.empty()) {
             LOG(ERROR) << "update faild";
             return;
         }

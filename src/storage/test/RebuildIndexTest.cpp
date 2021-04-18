@@ -68,7 +68,7 @@ TEST_F(RebuildIndexTest, RebuildTagIndexCheckALLData) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     cpp2::TaskPara parameter;
@@ -142,7 +142,7 @@ TEST_F(RebuildIndexTest, RebuildTagIndexCheckALLData) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 }
 
@@ -155,7 +155,7 @@ TEST_F(RebuildIndexTest, RebuildEdgeIndexCheckALLData) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     cpp2::TaskPara parameter;
@@ -229,7 +229,7 @@ TEST_F(RebuildIndexTest, RebuildEdgeIndexCheckALLData) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 }
 
@@ -245,7 +245,7 @@ TEST_F(RebuildIndexTest, RebuildTagIndexWithDelete) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     };
 
     // Add Vertices
@@ -254,7 +254,7 @@ TEST_F(RebuildIndexTest, RebuildTagIndexWithDelete) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     cpp2::TaskPara parameter;
     parameter.set_space_id(1);
@@ -315,7 +315,7 @@ TEST_F(RebuildIndexTest, RebuildTagIndexWithAppend) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     cpp2::TaskPara parameter;
     parameter.set_space_id(1);
@@ -360,7 +360,7 @@ TEST_F(RebuildIndexTest, RebuildTagIndex) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     cpp2::TaskPara parameter;
     parameter.set_space_id(1);
@@ -407,7 +407,7 @@ TEST_F(RebuildIndexTest, RebuildEdgeIndexWithDelete) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     };
 
     // Add Edges
@@ -416,7 +416,7 @@ TEST_F(RebuildIndexTest, RebuildEdgeIndexWithDelete) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     cpp2::TaskPara parameter;
     parameter.set_space_id(1);
@@ -469,7 +469,7 @@ TEST_F(RebuildIndexTest, RebuildEdgeIndexWithAppend) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     };
     writer->addTask(appendEdges);
 
@@ -479,7 +479,7 @@ TEST_F(RebuildIndexTest, RebuildEdgeIndexWithAppend) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     cpp2::TaskPara parameter;
     parameter.set_space_id(1);
@@ -523,7 +523,7 @@ TEST_F(RebuildIndexTest, RebuildEdgeIndex) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     cpp2::TaskPara parameter;
     parameter.set_space_id(1);

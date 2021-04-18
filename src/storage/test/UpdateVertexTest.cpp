@@ -175,7 +175,7 @@ TEST(UpdateVertexTest, No_Filter_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(6, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("1.name", (*resp.props_ref()).colNames[1]);
@@ -308,7 +308,7 @@ TEST(UpdateVertexTest, Filter_Yield_Test2) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 
     // Note: If filtered out, the result is old
     EXPECT_EQ(6, (*resp.props_ref()).colNames.size());
@@ -420,7 +420,7 @@ TEST(UpdateVertexTest, Insertable_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(6, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("1.name", (*resp.props_ref()).colNames[1]);
@@ -520,7 +520,7 @@ TEST(UpdateVertexTest, Invalid_Update_Prop_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 
     // get player from kvstore directly
     // Because no update, the value is old
@@ -636,7 +636,7 @@ TEST(UpdateVertexTest, Invalid_Filter_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 
     // get player from kvstore directly
     // Because no update, the value is old
@@ -755,7 +755,7 @@ TEST(UpdateVertexTest, Insertable_Filter_Value_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(6, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("1.name", (*resp.props_ref()).colNames[1]);
@@ -852,7 +852,7 @@ TEST(UpdateVertexTest, CorruptDataTest) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 }
 
 // TTL test
@@ -933,7 +933,7 @@ TEST(UpdateVertexTest, TTL_NoInsert_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 }
 
 // TTL test
@@ -1018,7 +1018,7 @@ TEST(UpdateVertexTest, TTL_Insert_No_Exist_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(6, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("1.name", (*resp.props_ref()).colNames[1]);
@@ -1144,7 +1144,7 @@ TEST(UpdateVertexTest, TTL_Insert_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(6, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("1.name", (*resp.props_ref()).colNames[1]);
@@ -1264,7 +1264,7 @@ TEST(UpdateVertexTest, Insertable_No_Defalut_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 }
 
 // upsert, insert success
@@ -1340,7 +1340,7 @@ TEST(UpdateVertexTest, Insertable_In_Set_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(5, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("1.name", (*resp.props_ref()).colNames[1]);

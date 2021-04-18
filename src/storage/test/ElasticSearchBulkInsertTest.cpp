@@ -213,7 +213,7 @@ TEST_F(ElasticSearchBasicTest, SimpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         checkAddVerticesData(req, env, 1000, 0);
     }
@@ -239,7 +239,7 @@ TEST_F(ElasticSearchBasicTest, SimpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
     sleep(FLAGS_heartbeat_interval_secs * 10);
     {

@@ -42,7 +42,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -62,7 +62,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -81,7 +81,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, team, - serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -101,7 +101,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, team, - serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -122,7 +122,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, team, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 6);
     }
@@ -141,7 +141,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -160,7 +160,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 6);
     }
@@ -179,7 +179,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, - teammate, - serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 6);
     }
@@ -198,7 +198,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, - teammate, - serve, serve, teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 8);
     }
@@ -217,7 +217,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, - teammate, - serve, serve, teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 8);
     }
@@ -236,7 +236,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -255,7 +255,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -278,7 +278,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -298,7 +298,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 6);
     }
@@ -319,7 +319,7 @@ TEST(GetNeighborsTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, teammate, -teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 7);
     }
@@ -354,7 +354,7 @@ TEST(GetNeighborsTest, GoFromMultiVerticesTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 2, 5);
     }
@@ -373,7 +373,7 @@ TEST(GetNeighborsTest, GoFromMultiVerticesTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, -serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 2, 5);
     }
@@ -398,7 +398,7 @@ TEST(GetNeighborsTest, GoFromMultiVerticesTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 2, 6);
     }
@@ -476,7 +476,7 @@ TEST(GetNeighborsTest, StatTest) {
         expectStat.emplace("LeBron James", std::vector<Value>{
             548 + 294 + 301 + 115, (29.7 + 27.1 + 27.5 + 25.7) / 4, 7, 2003 + 2010 + 2014 + 2018});
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges,
                                       1, 5, &expectStat);
@@ -533,7 +533,7 @@ TEST(GetNeighborsTest, StatTest) {
         expectStat.emplace("LeBron James", std::vector<Value>{
             (29.7 + 27.1 + 27.5 + 25.7) / 4, 25.7, 29.7});
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges,
                                       1, 5, &expectStat);
@@ -570,7 +570,7 @@ TEST(GetNeighborsTest, LimitSampleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         // vId, stat, team, -serve, expr
         ASSERT_EQ(5, (*resp.vertices_ref()).rows[0].values.size());
@@ -596,7 +596,7 @@ TEST(GetNeighborsTest, LimitSampleTest) {
         // vId, stat, player, serve, teammate, expr
         // Dwyane Wad has 4 serve edge, 2 teammate edge
         // with limit = 4, return all serve edges, none of the teammate edges will be returned
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         ASSERT_EQ(6, (*resp.vertices_ref()).rows[0].values.size());
         ASSERT_EQ(4, (*resp.vertices_ref()).rows[0].values[3].getList().values.size());
@@ -619,7 +619,7 @@ TEST(GetNeighborsTest, LimitSampleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         // vId, stat, team, -serve, expr
         ASSERT_EQ(5, (*resp.vertices_ref()).rows[0].values.size());
@@ -646,7 +646,7 @@ TEST(GetNeighborsTest, LimitSampleTest) {
         // vId, stat, player, serve, teammate, expr
         // Dwyane Wad has 4 serve edge, 2 teammate edge
         // with sample = 4
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         ASSERT_EQ(6, (*resp.vertices_ref()).rows[0].values.size());
         size_t actual = 0;
@@ -679,7 +679,7 @@ TEST(GetNeighborsTest, LimitSampleTest) {
         // 5 column, vId, stat, player, serve, teammate
         // Dwyane Wad has 4 serve edge, 2 teammate edge
         // with sample = 5
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         ASSERT_EQ(6, (*resp.vertices_ref()).rows[0].values.size());
         ASSERT_EQ(5, (*resp.vertices_ref()).rows[0].values[3].getList().values.size() +
@@ -718,7 +718,7 @@ TEST(GetNeighborsTest, MaxEdgReturnedPerVertexTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         // vId, stat, team, -serve, expr
         ASSERT_EQ(5, (*resp.vertices_ref()).rows[0].values.size());
@@ -745,7 +745,7 @@ TEST(GetNeighborsTest, MaxEdgReturnedPerVertexTest) {
         // vId, stat, player, serve, teammate, expr
         // Dwyane Wad has 4 serve edge, 2 teammate edge
         // with limit = 4, return all serve edges, none of the teammate edges will be returned
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         ASSERT_EQ(6, (*resp.vertices_ref()).rows[0].values.size());
         ASSERT_EQ(4, (*resp.vertices_ref()).rows[0].values[3].getList().values.size());
@@ -769,7 +769,7 @@ TEST(GetNeighborsTest, MaxEdgReturnedPerVertexTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         // vId, stat, team, -serve, expr
         ASSERT_EQ(5, (*resp.vertices_ref()).rows[0].values.size());
@@ -797,7 +797,7 @@ TEST(GetNeighborsTest, MaxEdgReturnedPerVertexTest) {
         // vId, stat, player, serve, teammate, expr
         // Dwyane Wad has 4 serve edge, 2 teammate edge
         // with sample = 4
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         ASSERT_EQ(6, (*resp.vertices_ref()).rows[0].values.size());
         size_t actual = 0;
@@ -831,7 +831,7 @@ TEST(GetNeighborsTest, MaxEdgReturnedPerVertexTest) {
         // 5 column, vId, stat, player, serve, teammate
         // Dwyane Wad has 4 serve edge, 2 teammate edge
         // with sample = 5
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         ASSERT_EQ(6, (*resp.vertices_ref()).rows[0].values.size());
         ASSERT_EQ(5, (*resp.vertices_ref()).rows[0].values[3].getList().values.size() +
@@ -869,7 +869,7 @@ TEST(GetNeighborsTest, VertexCacheTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -887,7 +887,7 @@ TEST(GetNeighborsTest, VertexCacheTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -922,7 +922,7 @@ TEST(GetNeighborsTest, TtlTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
     }
@@ -940,7 +940,7 @@ TEST(GetNeighborsTest, TtlTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - teammate, - serve, + serve, + teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 10);
     }
@@ -960,7 +960,7 @@ TEST(GetNeighborsTest, TtlTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         // vId, stat, player, serve, expr
         ASSERT_EQ(5, (*resp.vertices_ref()).rows[0].values.size());
@@ -984,7 +984,7 @@ TEST(GetNeighborsTest, TtlTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - teammate, - serve, + serve, + teammate, expr
         ASSERT_EQ(1, (*resp.vertices_ref()).rows.size());
         ASSERT_EQ(10, (*resp.vertices_ref()).rows[0].values.size());
@@ -1028,8 +1028,8 @@ TEST(GetNeighborsTest, FailedTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(1, (*resp.result_ref()).failed_parts.size());
-        ASSERT_EQ(ErrorCode::E_TAG_NOT_FOUND, (*resp.result_ref()).failed_parts.front().code);
+        ASSERT_EQ(1, (*resp.result_ref()).failedParts.size());
+        ASSERT_EQ(ErrorCode::E_TAG_NOT_FOUND, (*resp.result_ref()).failedParts.front().code);
     }
     {
         LOG(INFO) << "EdgeNotExists";
@@ -1045,9 +1045,9 @@ TEST(GetNeighborsTest, FailedTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(1, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(1, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(ErrorCode::E_EDGE_NOT_FOUND,
-                (*resp.result_ref()).failed_parts.front().code);
+                (*resp.result_ref()).failedParts.front().code);
     }
     {
         LOG(INFO) << "TagPropNotExists";
@@ -1063,9 +1063,9 @@ TEST(GetNeighborsTest, FailedTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(1, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(1, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(ErrorCode::E_TAG_PROP_NOT_FOUND,
-                (*resp.result_ref()).failed_parts.front().code);
+                (*resp.result_ref()).failedParts.front().code);
     }
     {
         LOG(INFO) << "EdgePropNotExists";
@@ -1081,9 +1081,9 @@ TEST(GetNeighborsTest, FailedTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(1, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(1, (*resp.result_ref()).failedParts.size());
         ASSERT_EQ(ErrorCode::E_EDGE_PROP_NOT_FOUND,
-                (*resp.result_ref()).failed_parts.front().code);
+                (*resp.result_ref()).failedParts.front().code);
     }
 }
 
@@ -1118,7 +1118,7 @@ TEST(GetNeighborsTest, ReturnAllPropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, serve, teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 7);
     }
@@ -1139,7 +1139,7 @@ TEST(GetNeighborsTest, ReturnAllPropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, -serve, teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 7);
     }
@@ -1168,7 +1168,7 @@ TEST(GetNeighborsTest, GoOverAllTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 3);
     }
@@ -1186,7 +1186,7 @@ TEST(GetNeighborsTest, GoOverAllTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - teammate, - serve, + serve, + teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 10);
     }
@@ -1204,7 +1204,7 @@ TEST(GetNeighborsTest, GoOverAllTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - teammate, - serve, + serve, + teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 10);
     }
@@ -1222,7 +1222,7 @@ TEST(GetNeighborsTest, GoOverAllTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - serve, - teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 8);
     }
@@ -1240,7 +1240,7 @@ TEST(GetNeighborsTest, GoOverAllTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, + serve, + teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 8);
     }
@@ -1258,7 +1258,7 @@ TEST(GetNeighborsTest, GoOverAllTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - teammate, - serve, + serve, + teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 3, 10);
     }
@@ -1276,7 +1276,7 @@ TEST(GetNeighborsTest, GoOverAllTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - teammate, - serve, + serve, + teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 3, 10);
     }
@@ -1305,7 +1305,7 @@ TEST(GetNeighborsTest, MultiVersionTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, team, general tag, - teammate, - serve, + serve, + teammate, expr
         QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 10);
     }
@@ -1350,7 +1350,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {kVid,
@@ -1396,7 +1396,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {kVid,
@@ -1448,7 +1448,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {kVid,
@@ -1489,7 +1489,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {kVid,
@@ -1540,7 +1540,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {kVid,
@@ -1591,7 +1591,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {kVid,
@@ -1687,7 +1687,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {kVid,
@@ -1736,7 +1736,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, serve, expr
         nebula::DataSet expected;
         expected.colNames = {
@@ -1784,7 +1784,7 @@ TEST(GetNeighborsTest, FilterTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         // vId, stat, player, teammate, -teammate, expr
         nebula::DataSet expected;
         expected.colNames = {

@@ -197,7 +197,7 @@ struct TossEnvironment {
                     LOG(INFO) << "partId=" << part.first
                               << ", ec="
                               // << apache::thrift::util::enumNameSafe(part.second);
-                              // "fuck";
+                              << "fuck";
                     if (part.second == ErrorCode::E_LEADER_CHANGED) {
                         retLeaderChange = true;
                     }
@@ -208,7 +208,7 @@ struct TossEnvironment {
             for (auto& execResp : execResps) {
                 // ResponseCommon
                 auto& respComn = execResp.get_result();
-                auto& failedParts = respComn.get_failed_parts();
+                auto& failedParts = respComn.failedParts;
                 for (auto& part : failedParts) {
                     if (part.code == ErrorCode::E_LEADER_CHANGED) {
                         retLeaderChange = true;
@@ -308,13 +308,18 @@ struct TossEnvironment {
             }
             cpp2::GetPropResponse& propResp = resps.front();
             nebula::ResponseCommon result = propResp.get_result();
-            std::vector<nebula::PartitionResult>& fparts = result.failed_parts;
+            std::vector<nebula::PartitionResult>& fparts = result.failedParts;
             if (!fparts.empty()) {
                 for (nebula::PartitionResult& res : fparts) {
-                    LOG(INFO) << "part_id: " << res.part_id << ", part leader " << res.get_leader()
-                              << ", code " << static_cast<int>(res.code);
+                    if (res.leader != nullptr) {
+                        LOG(INFO) << "part id: " << res.partId << ", part leader " << *res.leader
+                                << ", code " << static_cast<int>(res.code);
+                    } else {
+                        LOG(INFO) << "part id: " << res.partId
+                                << ", code " << static_cast<int>(res.code);
+                    }
                 }
-                LOG(FATAL) << "getProps() !failed_parts.empty())";
+                LOG(FATAL) << "getProps() !failedParts.empty())";
             }
             auto& dataSet = *propResp.props_ref();
             auto& rows = dataSet.rows;

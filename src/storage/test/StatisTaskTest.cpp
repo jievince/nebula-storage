@@ -125,7 +125,7 @@ TEST_F(StatisTaskTest, StatisTagAndEdgeData) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         cpp2::TaskPara parameter;
         parameter.set_space_id(spaceId);
@@ -196,7 +196,7 @@ TEST_F(StatisTaskTest, StatisTagAndEdgeData) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         cpp2::TaskPara parameter;
         parameter.set_space_id(spaceId);

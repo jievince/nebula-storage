@@ -22,13 +22,13 @@
         storage::cpp2::AdminExecResp resp; \
         nebula::ResponseCommon result; \
         std::vector<nebula::PartitionResult> partRetCode; \
-        result.set_failed_parts(partRetCode); \
+        result.failedParts = partRetCode; \
         resp.set_result(result); \
         pro.setValue(std::move(resp)); \
         return f; \
     } while (false)
 
-#define RETURN_LEADER_CHANGED(req, leader) \
+#define RETURN_LEADER_CHANGED(req, leader_) \
     UNUSED(req); \
     do { \
         folly::Promise<storage::cpp2::AdminExecResp> pro; \
@@ -37,10 +37,10 @@
         nebula::ResponseCommon result; \
         std::vector<nebula::PartitionResult> partRetCode; \
         nebula::PartitionResult thriftRet; \
-        thriftRet.set_code(storage::ErrorCode::E_LEADER_CHANGED); \
-        thriftRet.set_leader(leader); \
+        thriftRet.code = storage::ErrorCode::E_LEADER_CHANGED; \
+        thriftRet.leader.reset(new HostAddr(leader_)); \
         partRetCode.emplace_back(std::move(thriftRet)); \
-        result.set_failed_parts(partRetCode); \
+        result.failedParts = partRetCode; \
         resp.set_result(result); \
         pro.setValue(std::move(resp)); \
         return f; \
@@ -92,7 +92,7 @@ public:
         storage::cpp2::CreateCPResp resp;
         nebula::ResponseCommon result;
         std::vector<nebula::PartitionResult> partRetCode;
-        result.set_failed_parts(partRetCode);
+        result.failedParts = partRetCode;
         resp.set_result(result);
         resp.set_path("snapshot_path");
         pro.setValue(std::move(resp));

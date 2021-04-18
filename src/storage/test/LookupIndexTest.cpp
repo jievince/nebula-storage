@@ -1613,7 +1613,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
     cpp2::LookupIndexRequest req;
     req.set_space_id(spaceId);
@@ -1641,7 +1641,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         ASSERT_EQ(0, resp.get_data()->size());
     }
@@ -1667,7 +1667,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"1_a_1_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -1705,7 +1705,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"1_a_1_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -1733,7 +1733,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"1_a_1_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -1761,7 +1761,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"string_null"}));
         expected.rows.emplace_back(nebula::Row({"3_c_3_c"}));
@@ -1791,7 +1791,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"3_c_3_c"}));
         expected.rows.emplace_back(nebula::Row({"3_c_null_null"}));
@@ -1838,7 +1838,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         // Because col3 is out of index, so col3 > 1 will be used as filter
         expected.rows.emplace_back(nebula::Row({"3_c_3_c"}));
@@ -1884,7 +1884,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"3_c_3_c"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -1938,7 +1938,7 @@ TEST(LookupIndexTest, NullableInIndexAndFilterTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"3_c_3_c"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2109,7 +2109,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     auto columnHint = [] (const std::string& col, const cpp2::ScanType& scanType,
@@ -2149,7 +2149,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         expected.rows.emplace_back(nebula::Row({"true_4_null_d"}));
@@ -2178,7 +2178,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2210,7 +2210,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_4_null_d"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2242,7 +2242,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2271,7 +2271,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2300,7 +2300,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"false_5_5.0_null"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2337,7 +2337,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2374,7 +2374,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"false_5_5.0_null"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2405,7 +2405,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"false_5_5.0_null"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2438,7 +2438,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2473,7 +2473,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2506,7 +2506,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_1_1.0_a"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2532,7 +2532,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"null_2_2.0_b"}));
         expected.rows.emplace_back(nebula::Row({"all_null"}));
@@ -2561,7 +2561,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"all_null"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2592,7 +2592,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"all_null"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2625,7 +2625,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"all_null"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2658,7 +2658,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"true_4_null_d"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2691,7 +2691,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"false_null_3.0_c"}));
         ASSERT_EQ(expected, *(resp.get_data()));
@@ -2724,7 +2724,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         ASSERT_EQ(expected, *(resp.get_data()));
     }
@@ -2752,7 +2752,7 @@ TEST(LookupIndexTest, NullablePropertyTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         nebula::DataSet expected({std::string("111.").append(kVid)});
         expected.rows.emplace_back(nebula::Row({"null_2_2.0_b"}));
         ASSERT_EQ(expected, *(resp.get_data()));

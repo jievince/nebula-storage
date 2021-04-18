@@ -76,7 +76,7 @@ void getVertices(storage::StorageEnv* env,
     processor->process(req);
     auto resp = std::move(fut).get();
 
-    ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
     ASSERT_EQ(expectNum, (*resp.props_ref()).rows.size());
 }
 
@@ -114,7 +114,7 @@ TEST(VertexCacheTest, OperationVertexTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         // The number of data in players and teams is 81
         checkAddVerticesData(req, env, 81, 0);
@@ -200,7 +200,7 @@ TEST(VertexCacheTest, OperationVertexTest) {
         auto resp = std::move(f).get();
 
         LOG(INFO) << "Check the results...";
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         EXPECT_EQ(6, (*resp.props_ref()).colNames.size());
         EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
         EXPECT_EQ("1.name", (*resp.props_ref()).colNames[1]);
@@ -249,7 +249,7 @@ TEST(VertexCacheTest, OperationVertexTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());
         EXPECT_TRUE(ret.ok());
@@ -286,7 +286,7 @@ TEST(VertexCacheTest, GetNeighborsTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         // The number of data in players and teams is 81
         checkAddVerticesData(req, env, 81, 0);
@@ -323,7 +323,7 @@ TEST(VertexCacheTest, GetNeighborsTest) {
             processor->process(req);
             auto resp = std::move(fut).get();
 
-            ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+            ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
             // vId, stat, player, serve, expr
             QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
         }
@@ -337,7 +337,7 @@ TEST(VertexCacheTest, GetNeighborsTest) {
             processor->process(req);
             auto resp = std::move(fut).get();
 
-            ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+            ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
             // vId, stat, player, serve, expr
             QueryTestUtils::checkResponse(*resp.vertices_ref(), vertices, over, tags, edges, 1, 5);
         }
@@ -354,7 +354,7 @@ TEST(VertexCacheTest, GetNeighborsTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());
         EXPECT_TRUE(ret.ok());
@@ -390,7 +390,7 @@ TEST(VertexCacheTest, GetVertexPropTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         // The number of data in players and teams is 81
         checkAddVerticesData(req, env, 81, 0);
@@ -430,7 +430,7 @@ TEST(VertexCacheTest, GetVertexPropTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());
         EXPECT_TRUE(ret.ok());
@@ -469,7 +469,7 @@ TEST(VertexCacheTest, GetVertexPropWithTTLTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         // The number of data in players and teams is 81
         checkAddVerticesData(req, env, 81, 0);
@@ -516,7 +516,7 @@ TEST(VertexCacheTest, GetVertexPropWithTTLTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());
         EXPECT_TRUE(ret.ok());

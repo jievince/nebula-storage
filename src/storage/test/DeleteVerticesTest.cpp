@@ -37,7 +37,7 @@ TEST(DeleteVerticesTest, SimpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check data in kv store...";
         // The number of data in players and teams is 81
@@ -55,7 +55,7 @@ TEST(DeleteVerticesTest, SimpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());
@@ -86,7 +86,7 @@ TEST(DeleteVerticesTest, MultiVersionTest) {
             auto fut = processor->getFuture();
             processor->process(req);
             auto resp = std::move(fut).get();
-            EXPECT_EQ(0, resp.result.failed_parts.size());
+            EXPECT_EQ(0, resp.result.failedParts.size());
         }
         {
             LOG(INFO) << "AddVerticesProcessor...";
@@ -94,7 +94,7 @@ TEST(DeleteVerticesTest, MultiVersionTest) {
             auto fut = processor->getFuture();
             processor->process(specifiedOrderReq);
             auto resp = std::move(fut).get();
-            EXPECT_EQ(0, resp.result.failed_parts.size());
+            EXPECT_EQ(0, resp.result.failedParts.size());
         }
 
         LOG(INFO) << "Check data in kv store...";
@@ -113,7 +113,7 @@ TEST(DeleteVerticesTest, MultiVersionTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());

@@ -114,7 +114,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {kVid, "1.name", "1.age", "1.avgScore"};
         nebula::Row row({"Tim Duncan", "Tim Duncan", 44, 19.0});
@@ -133,7 +133,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {kVid, std::string("1.").append(kVid), std::string("1.").append(kTag),
                              "1.name", "1.age", "1.avgScore"};
@@ -153,7 +153,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {kVid, "1.name", "1.age", "1.avgScore"};
         {
@@ -179,7 +179,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {kVid, "2.name", "1.name", "1.age", "1.avgScore"};
         {
@@ -205,7 +205,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {kVid, "1.name", "1.age", "1.avgScore", "2.name"};
         {
@@ -238,7 +238,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {"101.teamName", "101.startYear", "101.endYear"};
         nebula::Row row({"Spurs", 1997, 2016});
@@ -266,7 +266,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {std::string("101.").append(kSrc), std::string("101.").append(kType),
                              std::string("101.").append(kRank), std::string("101.").append(kDst),
@@ -303,7 +303,7 @@ TEST(GetPropTest, PropertyTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {"101.teamName", "101.startYear", "101.endYear"};
         {
@@ -342,7 +342,7 @@ TEST(GetPropTest, AllPropertyInOneSchemaTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {kVid, "1.name", "1.age", "1.playing", "1.career",
                              "1.startYear", "1.endYear", "1.games", "1.avgScore",
@@ -372,7 +372,7 @@ TEST(GetPropTest, AllPropertyInOneSchemaTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         nebula::DataSet expected;
         expected.colNames = {"101.playerName", "101.teamName", "101.startYear", "101.endYear",
                              "101.teamCareer", "101.teamGames", "101.teamAvgScore", "101.type",
@@ -403,7 +403,7 @@ TEST(GetPropTest, AllPropertyInAllSchemaTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         {
             std::vector<nebula::Row> expected;
             nebula::Row row;
@@ -440,7 +440,7 @@ TEST(GetPropTest, AllPropertyInAllSchemaTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         {
             std::vector<nebula::Row> expected;
             nebula::Row row;
@@ -484,7 +484,7 @@ TEST(GetPropTest, AllPropertyInAllSchemaTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         {
             std::vector<nebula::Row> expected;
             ASSERT_TRUE(resp.props_ref().has_value());
@@ -503,7 +503,7 @@ TEST(GetPropTest, AllPropertyInAllSchemaTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         {
             std::vector<nebula::Row> expected;
             nebula::Row row;
@@ -532,7 +532,7 @@ TEST(GetPropTest, AllPropertyInAllSchemaTest) {
         processor->process(req);
         auto resp = std::move(fut).get();
 
-        ASSERT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        ASSERT_EQ(0, (*resp.result_ref()).failedParts.size());
         {
             std::vector<nebula::Row> expected;
             {

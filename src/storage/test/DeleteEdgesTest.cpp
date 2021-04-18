@@ -37,7 +37,7 @@ TEST(DeleteEdgesTest, SimpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
 
         LOG(INFO) << "Check data in kv store...";
         // The number of data in serve is 334
@@ -55,7 +55,7 @@ TEST(DeleteEdgesTest, SimpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
 
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());
@@ -85,7 +85,7 @@ TEST(DeleteEdgesTest, MultiVersionTest) {
             auto fut = processor->getFuture();
             processor->process(req);
             auto resp = std::move(fut).get();
-            EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+            EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         }
         {
             LOG(INFO) << "AddEdgesProcessor...";
@@ -93,7 +93,7 @@ TEST(DeleteEdgesTest, MultiVersionTest) {
             auto fut = processor->getFuture();
             processor->process(specifiedOrderReq);
             auto resp = std::move(fut).get();
-            EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+            EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         }
 
         LOG(INFO) << "Check data in kv store...";
@@ -112,7 +112,7 @@ TEST(DeleteEdgesTest, MultiVersionTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
 
         LOG(INFO) << "Check data in kv store...";
         auto ret = env->schemaMan_->getSpaceVidLen(req.get_space_id());

@@ -34,7 +34,7 @@ TEST(AddEdgesTest, SimpleTest) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     LOG(INFO) << "Check data in kv store...";
     // The number of data in serve is 334
@@ -56,7 +56,7 @@ TEST(AddEdgesTest, SpecifyPropertyNameTest) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     LOG(INFO) << "Check data in kv store...";
     // The number of data in serve is 334
@@ -79,7 +79,7 @@ TEST(AddEdgesTest, MultiVersionTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
     {
         LOG(INFO) << "AddEdgesProcessor...";
@@ -87,7 +87,7 @@ TEST(AddEdgesTest, MultiVersionTest) {
         auto fut = processor->getFuture();
         processor->process(specifiedOrderReq);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     LOG(INFO) << "Check data in kv store...";

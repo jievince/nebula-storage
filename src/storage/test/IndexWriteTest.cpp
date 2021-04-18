@@ -88,7 +88,7 @@ TEST(IndexTest, SimpleVerticesTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check insert data...";
         for (auto partId = 1; partId <= 6; partId++) {
@@ -118,7 +118,7 @@ TEST(IndexTest, SimpleVerticesTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check delete data...";
         for (auto partId = 1; partId <= 6; partId++) {
@@ -175,7 +175,7 @@ TEST(IndexTest, SimpleEdgesTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check insert data...";
         for (auto partId = 1; partId <= 6; partId++) {
@@ -209,7 +209,7 @@ TEST(IndexTest, SimpleEdgesTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check delete data...";
         for (auto partId = 1; partId <= 6; partId++) {
@@ -284,7 +284,7 @@ TEST(IndexTest, VerticesValueTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check insert data...";
         for (auto partId = 1; partId <= 6; partId++) {
@@ -399,7 +399,7 @@ TEST(IndexTest, AlterTagIndexTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check insert data...";
         for (auto partId = 1; partId <= 6; partId++) {
@@ -463,7 +463,7 @@ TEST(IndexTest, AlterTagIndexTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         LOG(INFO) << "Check insert data...";
         for (auto partId = 1; partId <= 6; partId++) {

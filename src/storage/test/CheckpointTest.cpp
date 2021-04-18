@@ -30,7 +30,7 @@ TEST(CheckpointTest, simpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     // Begin checkpoint
@@ -42,7 +42,7 @@ TEST(CheckpointTest, simpleTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
         auto checkpoint1 = folly::stringPrintf("%s/disk1/nebula/1/checkpoints/checkpoint_test/data",
                                                dataPath.path());
         auto files = fs::FileUtils::listAllFilesInDir(checkpoint1.data());

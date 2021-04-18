@@ -36,7 +36,7 @@ TEST(KVTest, SimpleTest) {
         auto req = mock::MockData::mockKVPut();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
     {
         auto* processor = GetProcessor::instance(env, nullptr);
@@ -44,7 +44,7 @@ TEST(KVTest, SimpleTest) {
         auto req = mock::MockData::mockKVGet();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         for (size_t part = 1; part <= totalParts; part++) {
             auto key =  NebulaKeyUtils::kvKey(part,
@@ -61,7 +61,7 @@ TEST(KVTest, SimpleTest) {
         auto req = mock::MockData::mockKVRemove();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
 
         for (size_t part = 1; part <= totalParts; part++) {
             auto key =  NebulaKeyUtils::kvKey(part,

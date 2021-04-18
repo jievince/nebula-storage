@@ -203,7 +203,7 @@ TEST(UpdateEdgeTest, No_Filter_Test) {
         auto resp = std::move(f).get();
 
         LOG(INFO) << "Check the results...";
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
         EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
         EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);
@@ -321,7 +321,7 @@ TEST(UpdateEdgeTest, No_Filter_Test) {
         auto resp = std::move(f).get();
 
         LOG(INFO) << "Check the results...";
-        EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
         EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
         EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);
@@ -476,7 +476,7 @@ TEST(UpdateEdgeTest, Filter_Yield_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 
     // Note: If filtered out, the result is old
     EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
@@ -627,7 +627,7 @@ TEST(UpdateEdgeTest, Insertable_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);
@@ -754,7 +754,7 @@ TEST(UpdateEdgeTest, Invalid_Update_Prop_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 
     // get serve from kvstore directly
     // Because no update, the value is old
@@ -885,7 +885,7 @@ TEST(UpdateEdgeTest, Invalid_Filter_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 
     // get serve from kvstore directly
     // Because no update, the value is old
@@ -1035,7 +1035,7 @@ TEST(UpdateEdgeTest, Insertable_Filter_value_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);
@@ -1168,7 +1168,7 @@ TEST(UpdateEdgeTest, CorruptDataTest) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 }
 
 // TTL test
@@ -1250,7 +1250,7 @@ TEST(UpdateEdgeTest, TTL_NoInsert_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 }
 
 // TTL test
@@ -1353,7 +1353,7 @@ TEST(UpdateEdgeTest, TTL_Insert_No_Exist_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);
@@ -1497,7 +1497,7 @@ TEST(UpdateEdgeTest, TTL_Insert_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);
@@ -1658,7 +1658,7 @@ TEST(UpdateEdgeTest, Yield_Key_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(9, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);
@@ -1802,7 +1802,7 @@ TEST(UpdateEdgeTest, Yield_Illegal_Key_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 
     // get serve from kvstore directly
     auto prefix = NebulaKeyUtils::edgePrefix(spaceVidLen, partId, srcId, edgeType, rank, dstId);
@@ -1912,7 +1912,7 @@ TEST(UpdateEdgeTest, Insertable_No_Default_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(1, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(1, (*resp.result_ref()).failedParts.size());
 }
 
 // Upsert, insert success
@@ -2012,7 +2012,7 @@ TEST(UpdateEdgeTest, Insertable_In_Set_Test) {
     auto resp = std::move(f).get();
 
     LOG(INFO) << "Check the results...";
-    EXPECT_EQ(0, (*resp.result_ref()).failed_parts.size());
+    EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
     EXPECT_EQ(8, (*resp.props_ref()).colNames.size());
     EXPECT_EQ("_inserted", (*resp.props_ref()).colNames[0]);
     EXPECT_EQ("101.playerName", (*resp.props_ref()).colNames[1]);

@@ -22,7 +22,7 @@ namespace meta {
         storage::cpp2::AdminExecResp resp;                                                         \
         nebula::ResponseCommon result;                                                      \
         std::vector<nebula::PartitionResult> partRetCode;                                   \
-        result.set_failed_parts(partRetCode);                                                      \
+        result.failedParts = partRetCode;                                                      \
         resp.set_result(result);                                                                   \
         pro.setValue(std::move(resp));                                                             \
         return f;                                                                                  \
@@ -43,7 +43,7 @@ public:
         storage::cpp2::CreateCPResp resp;
         nebula::ResponseCommon result;
         std::vector<nebula::PartitionResult> partRetCode;
-        result.set_failed_parts(partRetCode);
+        result.failedParts = partRetCode;
         resp.set_result(result);
         resp.set_path("snapshot_path");
         pro.setValue(std::move(resp));

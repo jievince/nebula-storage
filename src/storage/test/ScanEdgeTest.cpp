@@ -103,8 +103,8 @@ TEST(ScanEdgeTest, PropertyTest) {
             processor->process(req);
             auto resp = std::move(f).get();
 
-            ASSERT_EQ(0, resp.result.failed_parts.size());
-            checkResponse(*resp.edge_data_ref(), edge, edge.second.size(), totalRowCount);
+            ASSERT_EQ(0, resp.result.failedParts.size());
+            checkResponse(resp.edgeData, edge, edge.second.size(), totalRowCount);
         }
         CHECK_EQ(mock::MockData::serves_.size(), totalRowCount);
     }
@@ -119,9 +119,9 @@ TEST(ScanEdgeTest, PropertyTest) {
             processor->process(req);
             auto resp = std::move(f).get();
 
-            ASSERT_EQ(0, resp.result.failed_parts.size());
+            ASSERT_EQ(0, resp.result.failedParts.size());
             // all 9 columns in value
-            checkResponse(*resp.edge_data_ref(), edge, 9, totalRowCount);
+            checkResponse(resp.edgeData, edge, 9, totalRowCount);
         }
         CHECK_EQ(mock::MockData::serves_.size(), totalRowCount);
     }
@@ -153,12 +153,12 @@ TEST(ScanEdgeTest, CursorTest) {
                 processor->process(req);
                 auto resp = std::move(f).get();
 
-                ASSERT_EQ(0, resp.result.failed_parts.size());
-                checkResponse(*resp.edge_data_ref(), edge, edge.second.size(), totalRowCount);
-                hasNext = resp.get_has_next();
+                ASSERT_EQ(0, resp.result.failedParts.size());
+                checkResponse(resp.edgeData, edge, edge.second.size(), totalRowCount);
+                hasNext = resp.hasNext;
                 if (hasNext) {
-                    CHECK(resp.next_cursor_ref().has_value());
-                    cursor = *resp.next_cursor_ref();
+                    CHECK(resp.nextCursor != nullptr);
+                    cursor = *resp.nextCursor;
                 }
             }
         }
@@ -179,12 +179,12 @@ TEST(ScanEdgeTest, CursorTest) {
                 processor->process(req);
                 auto resp = std::move(f).get();
 
-                ASSERT_EQ(0, resp.result.failed_parts.size());
-                checkResponse(*resp.edge_data_ref(), edge, edge.second.size(), totalRowCount);
-                hasNext = resp.get_has_next();
+                ASSERT_EQ(0, resp.result.failedParts.size());
+                checkResponse(resp.edgeData, edge, edge.second.size(), totalRowCount);
+                hasNext = resp.hasNext;
                 if (hasNext) {
-                    CHECK(resp.next_cursor_ref().has_value());
-                    cursor = *resp.next_cursor_ref();
+                    CHECK(resp.nextCursor != nullptr);
+                    cursor = *resp.nextCursor;
                 }
             }
         }

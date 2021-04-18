@@ -123,7 +123,7 @@ void insertVertex(storage::StorageEnv* env, size_t vIdLen, TagID tagId) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 }
 
 void insertEdge(storage::StorageEnv* env, size_t vIdLen, EdgeType edgeType) {
@@ -150,7 +150,7 @@ void insertEdge(storage::StorageEnv* env, size_t vIdLen, EdgeType edgeType) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 }
 
 TEST(IndexWithTTLTest, AddVerticesIndexWithTTL) {
@@ -300,7 +300,7 @@ TEST(IndexWithTTLTest, UpdateVerticesIndexWithTTL) {
         auto f = processor->getFuture();
         processor->process(req);
         auto resp = std::move(f).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     LOG(INFO) << "Check data after update ...";
@@ -377,7 +377,7 @@ TEST(IndexWithTTLTest, UpdateEdgesIndexWithTTL) {
         auto f = processor->getFuture();
         processor->process(req);
         auto resp = std::move(f).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     LOG(INFO) << "Check data after update ...";
@@ -716,7 +716,7 @@ TEST(IndexWithTTLTest, LookupTagIndexWithTTL) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
     EXPECT_EQ(6, resp.get_data()->rows.size());
 }
 
@@ -762,7 +762,7 @@ TEST(IndexWithTTLTest, LookupEdgeIndexWithTTL) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
     EXPECT_EQ(6, resp.get_data()->rows.size());
 }
 
@@ -810,7 +810,7 @@ TEST(IndexWithTTLTest, LookupTagIndexWithTTLExpired) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
     EXPECT_EQ(0, resp.get_data()->rows.size());
 }
 
@@ -858,7 +858,7 @@ TEST(IndexWithTTLTest, LookupEdgeIndexWithTTLExpired) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
     EXPECT_EQ(0, resp.get_data()->rows.size());
 }
 

@@ -34,7 +34,7 @@ TEST(AddVerticesTest, SimpleTest) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     LOG(INFO) << "Check data in kv store...";
     // The number of vertices is 81
@@ -57,7 +57,7 @@ TEST(AddVerticesTest, SpecifyPropertyNameTest) {
     auto fut = processor->getFuture();
     processor->process(req);
     auto resp = std::move(fut).get();
-    EXPECT_EQ(0, resp.result.failed_parts.size());
+    EXPECT_EQ(0, resp.result.failedParts.size());
 
     LOG(INFO) << "Check data in kv store...";
     // The number of vertices is 81
@@ -80,7 +80,7 @@ TEST(AddVerticesTest, MultiVersionTest) {
         auto fut = processor->getFuture();
         processor->process(req);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
     {
         LOG(INFO) << "AddVerticesProcessor...";
@@ -88,7 +88,7 @@ TEST(AddVerticesTest, MultiVersionTest) {
         auto fut = processor->getFuture();
         processor->process(specifiedOrderReq);
         auto resp = std::move(fut).get();
-        EXPECT_EQ(0, resp.result.failed_parts.size());
+        EXPECT_EQ(0, resp.result.failedParts.size());
     }
 
     LOG(INFO) << "Check data in kv store...";

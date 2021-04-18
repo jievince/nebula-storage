@@ -402,7 +402,7 @@ public:
     static void checkResponse(const cpp2::LookupIndexResp& resp,
                               const std::vector<std::string>& expectCols,
                               std::vector<Row> expectRows) {
-        EXPECT_EQ(0, (*(*resp.result_ref()).failed_parts_ref()).size());
+        EXPECT_EQ(0, (*resp.result_ref()).failedParts.size());
         auto columns = (*resp.data_ref()).colNames;
         EXPECT_EQ(expectCols, columns);
         EXPECT_EQ(expectRows.size(), (*resp.data_ref()).rows.size());
